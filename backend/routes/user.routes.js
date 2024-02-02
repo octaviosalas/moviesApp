@@ -1,24 +1,24 @@
 import express from 'express';
 const userRoutes = express.Router();
 
-/*
+
 import  {
-    getAllUsers,
     createUser,
+    login,
     updateUser,
-    deleteUser,
+    getAllUsers,
     getUserById,
-    login
-} from '../controllers/userController.js' */
+    deleteUser
+} from '../controllers/users.controllers.js' 
 
 
 // Routes:
-userRoutes.get('/', );
-userRoutes.get('/:userId', );
-userRoutes.put('/:userId', );
-userRoutes.post('/createAccount', );
-userRoutes.post("/login", )
-userRoutes.delete('/:userId', );
+userRoutes.get('/', getAllUsers);
+userRoutes.get('/:userId', getUserById);
+userRoutes.put('/:userId', updateUser);
+userRoutes.post('/createAccount', createUser);
+userRoutes.post("/login", login)
+userRoutes.delete('/:userId', deleteUser);
 
 
 export default userRoutes;

@@ -1,23 +1,19 @@
 import express from 'express';
 const movieRoutes = express.Router();
 
-/*
 import  {
-    getAllUsers,
-    createUser,
-    updateUser,
-    deleteUser,
-    getUserById,
-    login
-} from '../controllers/userController.js' */
+    getAllRecomendations,
+    getRecomendationById,
+    deleteRecomendation,
+    createNewRecomendation,
+    updateRecomendation
+} from '../controllers/movies.controllers.js' 
 
-
-// Routes:
-movieRoutes.get('/allMovies', );
-movieRoutes.get('/:movieId', );
-movieRoutes.put('/:userId/:movieId', );
-movieRoutes.post('/newRecomendation', );
-movieRoutes.delete('/:userId/:movieId', );
+movieRoutes.get('/allMovies', getAllRecomendations);
+movieRoutes.get('/:movieId', getRecomendationById);
+movieRoutes.put('/:userId/:movieId', updateRecomendation);
+movieRoutes.post('/newRecomendation', createNewRecomendation);
+movieRoutes.delete('/:userId/:movieId', deleteRecomendation);
 
 
 export default movieRoutes;
