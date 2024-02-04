@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import CardMovie from './CardMovie'
+import NavBarComponent from './Navbar'
 
 const Main = () => {
 
@@ -28,9 +29,7 @@ const Main = () => {
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <div className='flex items-center justify-center '>
-        <CreateRecomendation updateMovies={getMovies}/> 
-      </div>
+      <NavBarComponent updateMovies={getMovies}/>
       <div className='flex  items-center justify-center mt-12'>
         <Posts movies={movies}/>
       </div>

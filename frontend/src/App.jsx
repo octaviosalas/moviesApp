@@ -15,7 +15,6 @@ function App() {
   return (
     <>
         <UserProvider>
-            <NavBarComponent />
               <Routes>
                 <Route path="/register" element={<Register />} />       
                 <Route path="/" element={<Login />} />      

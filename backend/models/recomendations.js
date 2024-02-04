@@ -43,4 +43,3 @@ const recomendationsSchema = mongoose.Schema({
 const Recomendations = mongoose.model("recomendations", recomendationsSchema)
 
 export default Recomendations;
-

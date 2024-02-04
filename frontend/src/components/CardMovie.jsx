@@ -1,13 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
+import CreateComment from "./CreateComment";
+import CreateRecomendation from "./CreateRecomendation";
+
+/*
+ addresseeId: { 
+        type: String
+    }, 
+    creatorId: { 
+        type: String
+    },
+    date: { 
+        type: String
+    },
+    recomendationId: { 
+        type: String
+    },
+    comment: { 
+        type: String
+    },
+    commentsLike: { 
+        type: Number
+    },
+    commentAnserws: { 
+        type: Array
+    }
+
+*/
 
 const CardMovie = ({ moviesData }) => {
+
   const navigate = useNavigate();
+  const [addresseeId, setAddresseeId] = useState("")
+  const [date, setDate] = useState("")
+  const [recomendationId, setRecomendationId] = useState("")
+  const [comment, setComment] = useState("")
+  
+
+
 
   const goTo = (category) => {
     navigate(`/movies/${category}`);
   };
+
+  const sendComment = () => { 
+    const commentData = ({ 
+      
+    })
+  }
 
   return (
    
@@ -23,10 +65,19 @@ const CardMovie = ({ moviesData }) => {
                 }}
             >
                 <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                <p className="text-tiny text-white uppercase font-bold">
-                    Your day your way
-                </p>
-                <h4 className="text-white font-bold text-xl">{mov.title}</h4>
+                 <div className="flex justify-between  w-full">
+                   <h4 className="text-white font-bold text-xl">{mov.title}</h4>
+                   <Dropdown>
+                        <DropdownTrigger>
+                            <small  variant="bordered" className="cursor-pointer text-md text-white"> ... </small>
+                        </DropdownTrigger>
+                        <DropdownMenu >
+                            <DropdownItem key="new">
+                                   <p>Comentar</p>
+                                </DropdownItem>
+                        </DropdownMenu>
+                        </Dropdown>
+                 </div>
                 </CardHeader>
                 <Image
                 removeWrapper

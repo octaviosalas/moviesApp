@@ -5,8 +5,9 @@ import {SearchIcon} from "../icons/SearchIcon.jsx";
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../store/userContext'
 import { useContext } from "react";
+import CreateRecomendation from "./CreateRecomendation.jsx";
 
-const NavBarComponent = () =>  {
+const NavBarComponent = ({updateMovies}) =>  {
 
   const userCtx = useContext(UserContext)
 
@@ -18,21 +19,16 @@ const NavBarComponent = () =>  {
           <AcmeLogo />
           <p className="hidden sm:block font-bold  text-black ">ACME</p>
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-3">
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
-            </Link>
-          </NavbarItem>
+        <NavbarContent className="hidden sm:flex gap-6">
           <NavbarItem isActive>
             <Link href="#" aria-current="page" color="secondary">
               Customers
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
-            </Link>
+          <NavbarItem>
+             <CreateRecomendation updateMovies={updateMovies}/> 
+          </NavbarItem>
           </NavbarItem>
         </NavbarContent>
       </NavbarContent>
