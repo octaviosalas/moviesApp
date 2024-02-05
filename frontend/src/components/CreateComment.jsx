@@ -52,7 +52,7 @@ const CreateComment = ({updateMovies}) => {
     return (
   <>
      <div className="flex flex-wrap gap-3">
-       <Button color="secondary" variant="shadow" className="font-bold" key={size} onPress={() => handleOpen(size, e)}> Create Recomendation</Button>  
+       <small color="secondary" variant="shadow" className="font-bold" key={size} onPress={() => handleOpen(size, e)}> Create Comment</small>  
      </div>
           <Modal size={size} isOpen={isOpen} onClose={onClose} >
             <ModalContent>

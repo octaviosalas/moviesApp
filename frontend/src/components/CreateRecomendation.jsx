@@ -8,6 +8,9 @@ import { UserContext } from '../store/userContext'
 import Dropzone from 'react-dropzone';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import {Textarea} from "@nextui-org/react";
+import {Select, SelectItem} from "@nextui-org/react";
+import getDate from "../functions/getDate";
+
 
 
 const CreateRecomendation = ({updateMovies}) => {
@@ -15,7 +18,9 @@ const CreateRecomendation = ({updateMovies}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
     const userCtx = useContext(UserContext)
     const [size, setSize] = React.useState('5xl')
+    const [actualDate, setActualDate] = useState(getDate())
     const [title, setTitle] = useState("")
+    const [allGens, setAllGens] = useState("")
     const [category, setCategory] = useState("")
     const [duration, setDuration] = useState("")
     const [platform, setPlatform] = useState("")
@@ -23,6 +28,11 @@ const CreateRecomendation = ({updateMovies}) => {
     const [score, setScore] = useState("")
     const [movieImage, setMovieImage] = useState("")
     const [showPhotoIcon, setShowPhotoIcon] = useState(true)
+    
+    const apiKey = '99081b38b932fb6a62ab5173b4a2f774';
+    const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5OTA4MWIzOGI5MzJmYjZhNjJhYjUxNzNiNGEyZjc3NCIsInN1YiI6IjY1YzEzNGU1MWRiYzg4MDE2MzFlOGNhYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DD43iksShO74D9nh8p-WsH8fUINCyk4VRXjks3MSNUU';
+    const apiUrl = 'https://api.themoviedb.org/3/discover/movie';
+
 
     const handleOpen = (size) => {
       setSize(size)
@@ -64,6 +74,7 @@ const CreateRecomendation = ({updateMovies}) => {
         score: score,
         movieImage: movieImage,
         observation: observation,
+        date: actualDate,
         userName: userCtx.userName,
         UserEmail: userCtx.userEmail,
         userProfileImage: userCtx.userProfileImage,
@@ -81,6 +92,39 @@ const CreateRecomendation = ({updateMovies}) => {
            })
     }
 
+    useEffect(() => { 
+          axios.get("http://localhost:4000/gens/allGens")
+               .then((res) => { 
+                  console.log(res.data)
+                  setAllGens(res.data)
+                })
+              .catch((err) => { 
+                console.log(err)
+         })
+    }, [])
+
+   /* const getData = () => { 
+      axios.get(apiUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        params: {
+          api_key: apiKey,
+          page: 2
+        },
+      })
+        .then(response => {
+          // Manejar la respuesta aquí
+          console.log(response.data);
+        })
+        .catch(error => {
+          // Manejar errores aquí
+          console.error('Error en la solicitud:', error);
+        });
+    }*/
+
+
     return (
   <>
      <div className="flex flex-wrap gap-3">
@@ -95,8 +139,17 @@ const CreateRecomendation = ({updateMovies}) => {
                     <div className="flex gap-16 justify-center items-center">
                         <div className="flex flex-col items-center justify-center">
                             <Input type="text" label="Title" variant="bordered" value={title} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setTitle(e.target.value)}/>
-                            <Input type="text" label="Category" variant="bordered" value={category} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setCategory(e.target.value)}/>
-                            <Input type="text" label="Platform" variant="bordered" value={platform} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setPlatform(e.target.value)}/>
+                            <Select
+                              items={allGens}
+                              label="Category"
+                              value={category}
+                              placeholder="Selecciona un Genero"
+                              className="max-w-xs mt-2"
+                              variant="bordered"
+                              onChange={(e) => setCategory(e.target.value)}
+                            >
+                              {(gen) => <SelectItem key={gen.name}>{gen.name}</SelectItem>}
+                            </Select>                            <Input type="text" label="Platform" variant="bordered" value={platform} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setPlatform(e.target.value)}/>
                             <Input type="number" label="Duration (minutes)" variant="bordered" value={duration} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setDuration(e.target.value)}/>
                             <Input  type="number" label="Score (1-10)" variant="bordered" value={score} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setScore(e.target.value)}/>   
                             <Textarea
@@ -110,7 +163,7 @@ const CreateRecomendation = ({updateMovies}) => {
                                     base: "max-w-xs",
                                     input: "resize-y min-h-[40px]",
                                 }}
-                                />   
+                                />  
                          </div>
                          <div className="flex flex-col items-center justify-center">
                             <p className="font-bold text-black text-sm mt-4">
@@ -120,7 +173,7 @@ const CreateRecomendation = ({updateMovies}) => {
                                 {({ getRootProps, getInputProps }) => (
                                     <div {...getRootProps({ className: 'dropzone' })} className=' flex justify-center'>
                                     <input {...getInputProps()} />
-                                       <div className=" avatar mt-4 w-72 h-60  flex justify-center rounded-2xl border border-dashed border-gray-900/25 "
+                                       <div className=" avatar mt-4 w-72 h-60  flex justify-center rounded-2xl border border-dashed border-gray-900/25 bg-cover bg-center"
                                            style={{ backgroundImage: `url(${movieImage})`, backgroundSize: 'cover' }}>
                                              <div className="text-center mt-16">
                                                   {showPhotoIcon ?  <PhotoIcon className="mx-auto mt-6 h-12 w-12 text-gray-300" aria-hidden="true" /> : null}

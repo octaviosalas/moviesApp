@@ -11,25 +11,22 @@ const NavBarComponent = ({updateMovies}) =>  {
 
   const userCtx = useContext(UserContext)
 
+
+ 
+
+
   return (
-    <div className="fixed inset-x-0 top-0 bg-gray-300 dark:bg-black text-white h-16 w-full">
+    <div className="fixed z-50 top-0 left-0 right-0 inset-x-0  bg-gray-300 dark:bg-black text-white h-16 w-full">
        <Navbar isBordered>
       <NavbarContent justify="start">
         <NavbarBrand className="mr-4">
           <AcmeLogo />
-          <p className="hidden sm:block font-bold  text-black ">ACME</p>
+          <p className="hidden sm:block font-bold  text-black ">Movies App</p>
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-6">
-          <NavbarItem isActive>
-            <Link href="#" aria-current="page" color="secondary">
-              Customers
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
+        <NavbarContent className="hidden sm:flex gap-6">         
           <NavbarItem>
              <CreateRecomendation updateMovies={updateMovies}/> 
-          </NavbarItem>
-          </NavbarItem>
+          </NavbarItem>     
         </NavbarContent>
       </NavbarContent>
 
@@ -52,12 +49,18 @@ const NavBarComponent = ({updateMovies}) =>  {
           <Avatar
               isBordered
               as="button"
-              className="transition-transform object-cover"
-              color="secondary"
+              className="transition-transform"
               size="sm"
               src={userCtx.userProfileImage}
-              style={{ width: '2rem', height: '2rem' }}
-            >
+              style={{
+                width: '2rem',
+                height: '2rem',
+                backgroundSize: '100% 100%',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundImage: `url(${userCtx.userProfileImage})`,
+
+              }}>
             </Avatar>
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">

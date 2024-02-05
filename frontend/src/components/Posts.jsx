@@ -7,9 +7,9 @@ import CardMovie from './CardMovie'
 const Posts = ({movies}) => {
 
     return (
-    <div className='flex flex-col text-center items-center justify-center'>
-         <CardMovie moviesData={movies}/>
-    </div>
+        <div className='flex flex-col text-center items-center justify-center'>
+            <CardMovie moviesData={movies}/>
+        </div>
   )
 }
 

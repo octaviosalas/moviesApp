@@ -8,6 +8,15 @@ const commentsSchema = mongoose.Schema({
     creatorId: { 
         type: String
     },
+    creatorName: { 
+        type: String
+    },
+    creatorProfileImage: { 
+        type: String,
+    },
+    creatorEmail: { 
+        type: String
+    },
     date: { 
         type: String
     },
@@ -26,7 +35,7 @@ const commentsSchema = mongoose.Schema({
 
 })
 
-const comments = mongoose.model("comments", commentsSchema)
+const Comments = mongoose.model("comments", commentsSchema)
 
-export default comments;
+export default Comments;
 

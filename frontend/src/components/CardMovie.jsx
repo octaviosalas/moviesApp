@@ -4,31 +4,8 @@ import { useNavigate } from "react-router-dom";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
 import CreateComment from "./CreateComment";
 import CreateRecomendation from "./CreateRecomendation";
+import { Link } from "react-router-dom";
 
-/*
- addresseeId: { 
-        type: String
-    }, 
-    creatorId: { 
-        type: String
-    },
-    date: { 
-        type: String
-    },
-    recomendationId: { 
-        type: String
-    },
-    comment: { 
-        type: String
-    },
-    commentsLike: { 
-        type: Number
-    },
-    commentAnserws: { 
-        type: Array
-    }
-
-*/
 
 const CardMovie = ({ moviesData }) => {
 
@@ -38,27 +15,20 @@ const CardMovie = ({ moviesData }) => {
   const [recomendationId, setRecomendationId] = useState("")
   const [comment, setComment] = useState("")
   
-
-
-
   const goTo = (category) => {
     navigate(`/movies/${category}`);
   };
 
-  const sendComment = () => { 
-    const commentData = ({ 
-      
-    })
-  }
+
 
   return (
    
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 mx-auto">
-        {moviesData.map((mov) => (
+ <div className={moviesData.length <= 3 ? "flex justify-center gap-6 mx-auto" : `grid grid-cols-1 sm:grid-cols-1 md:grid-cols-${moviesData.length < 3 ? moviesData.length : 2} xl:grid-cols-3 2xl:grid-cols-4 gap-6 mx-auto`}>
+    {moviesData.map((mov) => (
             <div key={mov._id} className="w-full ">
             <Card
                 isFooterBlurred
-                className="w-[260px] h-[300px] col-span-12 sm:col-span-7"
+                className="w-[260px] h-[300px] col-span-12 sm:col-span-7 bg-cover bg-center"
                 style={{
                 backgroundImage: `url(${mov.movieImage})`,
                 backgroundSize: "cover",
@@ -73,7 +43,7 @@ const CardMovie = ({ moviesData }) => {
                         </DropdownTrigger>
                         <DropdownMenu >
                             <DropdownItem key="new">
-                                   <p>Comentar</p>
+                                  <Link to={`/movie/${mov._id}`}><p>Comentar</p></Link> 
                                 </DropdownItem>
                         </DropdownMenu>
                         </Dropdown>
@@ -91,10 +61,12 @@ const CardMovie = ({ moviesData }) => {
                         <div className="flex flex-col justify-start text-start">
                             <p className="text-tiny text-white/60">{mov.platform}</p>
                             <p className="text-tiny text-white/60">{mov.duration} minutes</p>
-                            <p className="text-tiny text-white/60">See author's review</p>
+                            <p className="text-tiny text-white/60">{mov.date}</p>
                         </div>
                     </div>
-                 <Button radius="full" className="font-bold text-black" size="sm" onClick={() => goTo(`${mov.category}`)}> {mov.category} </Button>                         
+                        <Link to={`/movie/${mov._id}`}>
+                            <Button radius="full" className="font-bold text-black" size="sm" onClick={() => goTo(`${mov.category}`)}> Ver </Button>
+                        </Link>                    
                 </CardFooter>
             </Card>
           

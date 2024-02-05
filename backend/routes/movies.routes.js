@@ -11,7 +11,7 @@ import  {
 
 movieRoutes.get('/allMovies', getAllRecomendations);
 movieRoutes.get('/:movieId', getRecomendationById);
-movieRoutes.put('/:userId/:movieId', updateRecomendation);
+movieRoutes.put('/:userId/:recomendationId', updateRecomendation);
 movieRoutes.post('/newRecomendation', createNewRecomendation);
 movieRoutes.delete('/:userId/:movieId', deleteRecomendation);
 
