@@ -98,7 +98,7 @@ const RecomendationDetail = () => {
   return (
     <div>
           <NavBarComponent/>
-          <div className='flex flex-col xl:flex-row  md:mt-36 lg:mt-24 xl:mt-16 2xl:mt-12 items-center gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
+          <div className='flex flex-col 2xl:flex-row xs:mt-60 md:mt-56 lg:mt-24 xl:mt-16 2xl:mt-12 items-center gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
             <div>
               <CardMovieIndividual moviesData={recomendationGralData}/>
             </div>
@@ -154,6 +154,7 @@ const RecomendationDetail = () => {
                           variant="faded"
                           placeholder="Escribe tu comentario.."
                           disableAnimation
+                          value={comment}
                           disableAutosize
                           className='w-full'
                           classNames={{                       

@@ -37,6 +37,17 @@ const recomendationsSchema = mongoose.Schema({
     },
     observation: { 
         type: String
+    },
+    language: { 
+        type: String
+    },
+    director: { 
+        type: String,
+        required: false
+    },
+    actors: { 
+        type: String,
+        required: false
     }
 })
 

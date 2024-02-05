@@ -21,17 +21,21 @@ const CreateRecomendation = ({updateMovies}) => {
     const [actualDate, setActualDate] = useState(getDate())
     const [title, setTitle] = useState("")
     const [allGens, setAllGens] = useState("")
+    const [language, setLanguage] = useState("")
     const [category, setCategory] = useState("")
     const [duration, setDuration] = useState("")
+    const [director, setDirector] = useState("")
+    const [actors, setActors] = useState("")
     const [platform, setPlatform] = useState("")
     const [observation, setObservation] = useState("")
     const [score, setScore] = useState("")
     const [movieImage, setMovieImage] = useState("")
+    const [filteredData, setFilteredData] = useState("")
     const [showPhotoIcon, setShowPhotoIcon] = useState(true)
     
-    const apiKey = '99081b38b932fb6a62ab5173b4a2f774';
-    const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5OTA4MWIzOGI5MzJmYjZhNjJhYjUxNzNiNGEyZjc3NCIsInN1YiI6IjY1YzEzNGU1MWRiYzg4MDE2MzFlOGNhYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DD43iksShO74D9nh8p-WsH8fUINCyk4VRXjks3MSNUU';
-    const apiUrl = 'https://api.themoviedb.org/3/discover/movie';
+    const apiKey = '6d25d856';
+   
+   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
     const handleOpen = (size) => {
@@ -75,6 +79,9 @@ const CreateRecomendation = ({updateMovies}) => {
         movieImage: movieImage,
         observation: observation,
         date: actualDate,
+        language: language,
+        actor: actors,
+        director: director,
         userName: userCtx.userName,
         UserEmail: userCtx.userEmail,
         userProfileImage: userCtx.userProfileImage,
@@ -103,26 +110,42 @@ const CreateRecomendation = ({updateMovies}) => {
          })
     }, [])
 
-   /* const getData = () => { 
-      axios.get(apiUrl, {
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-        params: {
-          api_key: apiKey,
-          page: 2
-        },
-      })
-        .then(response => {
-          // Manejar la respuesta aquí
-          console.log(response.data);
-        })
-        .catch(error => {
-          // Manejar errores aquí
-          console.error('Error en la solicitud:', error);
-        });
-    }*/
+
+    const getData = (e) => { 
+      if(e.length === 0) { 
+        setFilteredData("")
+        setTitle("")
+        setDuration("")
+        setMovieImage("")
+        setShowPhotoIcon(true)
+        setLanguage("")
+        setDirector("")
+        setActors("")
+      }
+       console.log(e)
+       setTitle(e)
+       axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&t=${e}`)
+            .then((res) => { 
+              console.log(res.data)
+              setFilteredData(res.data)
+            })
+            .catch((err) => { 
+              console.log(err)
+            })
+    }
+
+    const chooseTheMovie = (movie) => { 
+      setTitle(movie.Title)
+      setDuration(movie.Runtime)
+      setMovieImage(movie.Poster)
+      setLanguage(movie.Language)
+      setShowPhotoIcon(false)
+      setFilteredData("")
+      setDirector(movie.Director)
+      setActors(movie.Actors)
+    }
+
+    
 
 
     return (
@@ -138,7 +161,22 @@ const CreateRecomendation = ({updateMovies}) => {
                   <ModalBody>
                     <div className="flex gap-16 justify-center items-center">
                         <div className="flex flex-col items-center justify-center">
-                            <Input type="text" label="Title" variant="bordered" value={title} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setTitle(e.target.value)}/>
+                          <div className="flex flex-col items-center justify-center relative mt-2 w-60">
+                              <Input 
+                                type="text" 
+                                label="Title" 
+                                variant="bordered" 
+                                value={title} 
+                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm"
+                                onChange={(e) => getData(e.target.value)}/>
+                                {filteredData !== "" ? 
+                                <div className="bg-white shadow-lg">
+                                  <p onClick={() => chooseTheMovie(filteredData)}>{filteredData.Title}</p> 
+                                </div>
+                                :
+                                null
+                                }
+                              </div>
                             <Select
                               items={allGens}
                               label="Category"
@@ -149,21 +187,55 @@ const CreateRecomendation = ({updateMovies}) => {
                               onChange={(e) => setCategory(e.target.value)}
                             >
                               {(gen) => <SelectItem key={gen.name}>{gen.name}</SelectItem>}
-                            </Select>                            <Input type="text" label="Platform" variant="bordered" value={platform} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setPlatform(e.target.value)}/>
-                            <Input type="number" label="Duration (minutes)" variant="bordered" value={duration} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setDuration(e.target.value)}/>
-                            <Input  type="number" label="Score (1-10)" variant="bordered" value={score} className="mt-2  w-60 cursor-pointer rounded-lg border border-none text-sm" onChange={(e) => setScore(e.target.value)}/>   
+                            </Select>                           
+                             <Input 
+                                type="text" 
+                                label="Platform" 
+                                variant="bordered" 
+                                value={platform} 
+                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                onChange={(e) => setPlatform(e.target.value)}
+                             />
+                            <Input 
+                                type="text" 
+                                label="Duration (minutes)" 
+                                variant="bordered" 
+                                value={duration} 
+                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                onChange={(e) => setDuration(e.target.value)}
+                            />
+                             <Input 
+                                type="text" 
+                                label="Idioma" 
+                                variant="bordered" 
+                                value={language} 
+                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                onChange={(e) => setLanguage(e.target.value)}
+                            />
+                            <Input  
+                                type="number" 
+                                label="Score (1-10)" 
+                                variant="bordered" 
+                                value={score} 
+                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                onChange={(e) => setScore(e.target.value)}
+                            />   
+                            
                             <Textarea
                                 label="Your Comment"
                                 variant="bordered"
                                 placeholder="Enter your description"
                                 disableAnimation
                                 className="mt-2"
+                                value={observation} 
+                                onChange={(e) => setObservation(e.target.value)}
                                 disableAutosize
                                 classNames={{
                                     base: "max-w-xs",
                                     input: "resize-y min-h-[40px]",
                                 }}
                                 />  
+ 
                          </div>
                          <div className="flex flex-col items-center justify-center">
                             <p className="font-bold text-black text-sm mt-4">
@@ -174,7 +246,7 @@ const CreateRecomendation = ({updateMovies}) => {
                                     <div {...getRootProps({ className: 'dropzone' })} className=' flex justify-center'>
                                     <input {...getInputProps()} />
                                        <div className=" avatar mt-4 w-72 h-60  flex justify-center rounded-2xl border border-dashed border-gray-900/25 bg-cover bg-center"
-                                           style={{ backgroundImage: `url(${movieImage})`, backgroundSize: 'cover' }}>
+                                           style={{ backgroundImage: `url(${movieImage})`, backgroundSize: 'cover',   backgroundRepeat: "no-repeat", }}>
                                              <div className="text-center mt-16">
                                                   {showPhotoIcon ?  <PhotoIcon className="mx-auto mt-6 h-12 w-12 text-gray-300" aria-hidden="true" /> : null}
                                                     <div className="mt-4 flex text-sm leading-6 text-gray-600">

@@ -60,7 +60,7 @@ const CardMovie = ({ moviesData }) => {
                         <Image  alt="Breathing app icon" className="rounded-full w-10 h-11 bg-black" src={mov.userProfileImage} />
                         <div className="flex flex-col justify-start text-start">
                             <p className="text-tiny text-white/60">{mov.platform}</p>
-                            <p className="text-tiny text-white/60">{mov.duration} minutes</p>
+                            <p className="text-tiny text-white/60">{mov.duration} </p>
                             <p className="text-tiny text-white/60">{mov.date}</p>
                         </div>
                     </div>
