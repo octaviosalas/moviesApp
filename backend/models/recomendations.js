@@ -48,7 +48,17 @@ const recomendationsSchema = mongoose.Schema({
     actors: { 
         type: String,
         required: false
-    }
+    },
+    likes: {
+        type: [{ 
+            date: String,
+            userId: String,
+            userName: String,
+            userProfileImage: String,
+            addresseeId: String,
+        }],
+        default: [],
+    },
 })
 
 const Recomendations = mongoose.model("recomendations", recomendationsSchema)

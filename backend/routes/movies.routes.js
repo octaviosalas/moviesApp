@@ -6,12 +6,14 @@ import  {
     getRecomendationById,
     deleteRecomendation,
     createNewRecomendation,
-    updateRecomendation
+    updateRecomendation,
+    removeLike
 } from '../controllers/movies.controllers.js' 
 
 movieRoutes.get('/allMovies', getAllRecomendations);
 movieRoutes.get('/:movieId', getRecomendationById);
-movieRoutes.put('/:userId/:recomendationId', updateRecomendation);
+movieRoutes.put('/update/:recomendationId', updateRecomendation);
+movieRoutes.put('/removeLike/:recomendationId', removeLike);
 movieRoutes.post('/newRecomendation', createNewRecomendation);
 movieRoutes.delete('/:userId/:movieId', deleteRecomendation);
 

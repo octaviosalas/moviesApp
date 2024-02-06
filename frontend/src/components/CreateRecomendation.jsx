@@ -178,15 +178,19 @@ const CreateRecomendation = ({updateMovies}) => {
                 <>
                   <ModalHeader className="flex flex-col gap-1 font-bold">Create Recomendation </ModalHeader>
                   <ModalBody onClick={() => setFilteredData("")}>
-                    <div className="flex gap-16 justify-center items-center">
-                        <div className="flex flex-col items-center justify-center">
-                          <div className="flex flex-col items-center justify-center relative mt-2 w-60">
+                    <div className="flex flex-col md:flex-row gap-16 justify-center items-center">
+
+                        <div className="flex flex-row md:flex-col items-center justify-center">
+                            <div className="flex flex-col">
+                                <div className="flex md:flex-col items-center gap-2 justify-center">
+                                   <div className="flex flex-col items-center justify-center relative mt-2 w-60">
+                              
                               <Input 
                                 type="text" 
                                 label="Title" 
                                 variant="bordered" 
                                 value={title} 
-                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm"
+                                className="mt-2 w-44 md:w-60 cursor-pointer rounded-lg border border-none text-sm"
                                 onChange={(e) => getData(e.target.value)}/>
                                 {filteredData !== "" ? 
                                 <div className='options-container absolute top-16 z-20 bg-white border shadow-xl rounded-lg mt-1 w-46 items-center justify-center overflow-y-auto max-h-[300px]' >
@@ -199,8 +203,8 @@ const CreateRecomendation = ({updateMovies}) => {
                                 :
                                 null
                                 }
-                              </div>
-                            <Select
+                                   </div>
+                                  <Select
                               items={allGens}
                               label="Category"
                               value={category}
@@ -210,57 +214,70 @@ const CreateRecomendation = ({updateMovies}) => {
                               onChange={(e) => setCategory(e.target.value)}
                             >
                               {(gen) => <SelectItem key={gen.name}>{gen.name}</SelectItem>}
-                            </Select>                           
-                             <Input 
-                                type="text" 
-                                label="Platform" 
-                                variant="bordered" 
-                                value={platform} 
-                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
-                                onChange={(e) => setPlatform(e.target.value)}
-                             />
-                            <Input 
-                                type="text" 
-                                label="Duration (minutes)" 
-                                variant="bordered" 
-                                value={duration} 
-                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
-                                onChange={(e) => setDuration(e.target.value)}
-                            />
-                             <Input 
-                                type="text" 
-                                label="Idioma" 
-                                variant="bordered" 
-                                value={language} 
-                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
-                                onChange={(e) => setLanguage(e.target.value)}
-                            />
+                                  </Select>   
+                                </div>
+
+                                <div className="flex md:flex-col items-center gap-2 justify-center">                                                
+                                    <Input 
+                                        type="text" 
+                                        label="Platform" 
+                                        variant="bordered" 
+                                        value={platform} 
+                                        className="mt-2 w-44 md:w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                        onChange={(e) => setPlatform(e.target.value)}
+                                    />
+                                    <Input 
+                                        type="text" 
+                                        label="Duration (minutes)" 
+                                        variant="bordered" 
+                                        value={duration} 
+                                        className="mt-2 w-44 md:w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                        onChange={(e) => setDuration(e.target.value)}
+                                    />
+                                </div>
+                                <div className="flex md:flex-col items-center gap-2 justify-center"> 
+                                      <Input 
+                                      type="text" 
+                                      label="Idioma" 
+                                      variant="bordered" 
+                                      value={language} 
+                                      className="mt-2 w-44 md:w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                      onChange={(e) => setLanguage(e.target.value)}
+                                  />
+                                  
+                                  <Input  
+                                      type="number" 
+                                      label="Score (1-10)" 
+                                      variant="bordered" 
+                                      value={score} 
+                                      className="mt-2 w-44 md:w-60 cursor-pointer rounded-lg border border-none text-sm" 
+                                      onChange={(e) => setScore(e.target.value)}
+                                  />   
+                                </div>
+                                <div className="flex md:flex-col items-center gap-2 justify-center">
+                                    <Textarea
+                                    label="Your Comment"
+                                    variant="bordered"
+                                    placeholder="Enter your description"
+                                    disableAnimation
+                                    className="mt-2 w-full"
+                                    value={observation} 
+                                    onChange={(e) => setObservation(e.target.value)}
+                                    disableAutosize
+                                    classNames={{
+                                        base: "max-w-xs",
+                                        input: "resize-y min-h-[40px]",
+                                    }}
+                                    />  
+                                   </div>
+                            </div>
+                           
+                      
                             
-                            <Input  
-                                type="number" 
-                                label="Score (1-10)" 
-                                variant="bordered" 
-                                value={score} 
-                                className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
-                                onChange={(e) => setScore(e.target.value)}
-                            />   
-                            
-                            <Textarea
-                                label="Your Comment"
-                                variant="bordered"
-                                placeholder="Enter your description"
-                                disableAnimation
-                                className="mt-2"
-                                value={observation} 
-                                onChange={(e) => setObservation(e.target.value)}
-                                disableAutosize
-                                classNames={{
-                                    base: "max-w-xs",
-                                    input: "resize-y min-h-[40px]",
-                                }}
-                                />  
+                           
  
                          </div>
+
                          <div className="flex flex-col items-center justify-center">
                             <p className="font-bold text-black text-sm mt-4">
                                 Upload a Picture of the Movie

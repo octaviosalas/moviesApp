@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../store/userContext'
+import NavBarComponent from './Navbar'
+import {Input, Button} from "@nextui-org/react";
 
 const Login = () => { 
 
@@ -77,49 +79,44 @@ const Login = () => {
      
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
-
-               
+      <NavBarComponent/>              
         <div className="flex flex-col items-center justify-center sm:mx-auto sm:w-full sm:max-w-sm">  
                 <div className=" flex text-center h-16 w-16 justify-center rounded-full" style={{backgroundColor:"#D3D3D3"}}>
                   <img src="https://cdn-icons-png.flaticon.com/512/2991/2991494.png" className="h-12 w-12 m-2"/>
                 </div>
                 <div>
-                  <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">INICIAR SESION</h2>
+                  <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight " style={{color:"#7D38D1"}}>INICIAR SESION</h2>
                 </div>
         </div>
 
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">    
          <div>
-                <div className="flex items-center justify-between">
-                    <label htmlFor="password" className="block text-sm leading-6 text-gray-900">  Email de Usuario </label>      
-                </div>
+              
                 <div className="mt-2">
-                    <input id="email"  
+                    
+                   <Input  label="Email" variant="bordered" 
                     name="email" type="email"
                     autoComplete="email" 
                     value={email}
                     required 
-                    className="block w-full text-center rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-inset focus:ring-blue-500 sm:text-sm sm:leading-6" 
-                    onChange={(e) => setEmail(e.target.value)}
-                    />
+                    className="block w-full text-center rounded-md border-0  sm:text-sm sm:leading-6" 
+                    onChange={(e) => setEmail(e.target.value)}/>
                 </div>
             </div>
 
             <div>
-                <div className="flex items-center justify-between">
-                    <label htmlFor="password" className="block text-sm  leading-6 text-gray-900">
-                    Contraseña
-                    </label> 
-                </div>
+                
             <div className="mt-2">
-                <input id="password" 
+                <Input 
+                id="password" 
                 name="password" 
+                label="Contraseña"
                 type="password" 
                 autoComplete="current-password" 
                 value={password}
-               
+                variant="bordered" 
                 required 
-                className="block w-full text-center rounded-md border-none py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-none  sm:text-sm sm:leading-6" 
+                className="block w-full text-center rounded-md border-0  sm:text-sm sm:leading-6" 
                 onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
@@ -138,23 +135,25 @@ const Login = () => {
           :
           <>
             <div className='mt-6'>
-                    <button  type="submit" className="flex  justify-center rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm cus-visible:outline w-72" style={{backgroundColor:"#4C70A5"}}
-                    onClick={() => loginMySession()}>
-                    INICIAR SESION
-                    </button>
+                   
+                    <Button color="secondary" onClick={() => loginMySession()} className='w-72 font-medium'>
+                      INICIAR SESION
+                    </Button> 
             </div>
 
         <div className='mt-6'>
         <Link to={"/register"}> 
-            <button  type="submit" className="flex  justify-center rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm cus-visible:outline w-72" style={{backgroundColor:"#768BAB"}} >
-                REGISTRARME
-            </button> 
+             <Button style={{backgroundColor:"#C4ACD5"}}  className="w-72 text-white font-medium">
+                 REGISTRARME
+              </Button> 
           </Link> 
         </div>
         </>
       }
 
       {errorMessage ? <p className='mt-8 font-bold text-xs' style={{color:"#728EC3"}} >{textMessage}</p> : null}
+
+      
 
     </div>
   </div>

@@ -40,34 +40,55 @@ export const getRecomendationById = async (req, res) => {
     }
   }
 
+
   export const updateRecomendation = async (req, res) => {
-    const { movieId } = req.params;
-    const {category, title, duration, userName, UserEmail, platform, score, date} = req.body
-  
-  
+    const { recomendationId } = req.params;
+    const { likedata } = req.body;
+
+    console.log('Datos recibidos:', likedata);
+
     try {
-          Recomendations.findByIdAndUpdate({ _id: movieId }, { 
-                category: category,
-                title: title,
-                duration: duration,
-                userName: userName,
-                UserEmail: UserEmail,
-                platform: platform,
-                score: score,
-                date: date
-            })
-            .then((newMovie) => {                                      
-            res.json({message:"The Publication was removed of Favorites", newMovie})
-            })
-            .catch((err) => { 
-            console.log(err)
-            })
-  
+        const updatedDocument = await Recomendations.findByIdAndUpdate(
+            { _id: recomendationId },
+            { $push: { likes: likedata } },
+            { new: true } 
+        );
+
+        if (!updatedDocument) {
+            return res.status(404).json({ error: "No se encontró la recomendación con el ID proporcionado." });
+        }
+
+        res.status(200).json(updatedDocument);
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Error interno del servidor' });
+        console.error('Error:', error);
+        res.status(500).json({ error: "Error interno del servidor" });
     }
-  };
+};
+
+
+export const removeLike = async (req, res) => {
+  const { recomendationId } = req.params;
+  const { userData } = req.body;
+
+  console.log('Datos recibidos:', userData.userId);
+
+  try {
+      const updatedDocument = await Recomendations.findByIdAndUpdate(
+          { _id: recomendationId },
+          { $pull: { likes: { userId: userData.userId } } },
+          { new: true } 
+      );
+
+      if (!updatedDocument) {
+          return res.status(404).json({ error: "No se encontró la recomendación con el ID proporcionado." });
+      }
+
+      res.status(200).json(updatedDocument);
+  } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
   
 
   export const deleteRecomendation = async (req, res) => {

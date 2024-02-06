@@ -11,11 +11,10 @@ import commentsRoutes from "./routes/comments.routes.js"
 const app = express()
 const PORT = 4000
 
-app.use(express.json())
-app.use(cors())
+app.use(express.json());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/users', userRoutes);

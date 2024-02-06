@@ -11,16 +11,10 @@ import CardMovieIndividual from "./CardMovieIndividual"
 import {Avatar} from "@nextui-org/react";
 import Loading from "./Loading"
 import {Button} from "@nextui-org/react";
+import like from "../img/like.png"
+import noLike from "../img/noLike.png"
+import LikesModal from './LikesModal';
 
-
-
-
-/*
- addresseeId: { 
-        type: String
-    }, 
-  
-*/
 
 const RecomendationDetail = () => {
 
@@ -31,8 +25,10 @@ const RecomendationDetail = () => {
     const [ load, setLoad] = useState(true)
     const [addresseeId, setAddresseeId] = useState("")
     const [recomendation, setRecomendation] = useState("")
+    const [quantityLikes, setQuantityLikes] = useState(0)
     const [recomendationGralData, setRecomendationGralData] = useState([])
     const [recomendationCommentsReceived, setRecomendationCommentsReceived] = useState([])
+    const [dontLike, setDontLike] = useState(true)
 
     const getComments = () => { 
       axios.get(`http://localhost:4000/comments/publicationComments`)
@@ -50,6 +46,15 @@ const RecomendationDetail = () => {
             axios.get(`http://localhost:4000/movies/${recomendationId}`)
             .then((res) => { 
                 console.log(res.data)
+                const quantityLikes = res.data.likes.length
+                setQuantityLikes(quantityLikes)
+                const searchMyLike = res.data.likes.filter((like) => like.userId === userCtx.userId)
+                console.log(searchMyLike)
+                if(searchMyLike.length === 0) { 
+                  setDontLike(true)
+                } else { 
+                  setDontLike(false)
+                }
                 setRecomendationGralData([res.data]);
                 setAddresseeId(res.data.userId)
                 setRecomendation(res.data._id)
@@ -64,7 +69,7 @@ const RecomendationDetail = () => {
         getComments()
     }, [recomendationId])
 
-  const createNewComment = () => { 
+   const createNewComment = () => { 
       const commentData = ({ 
         creatorId: userCtx.userId,
         creatorName: userCtx.userName,
@@ -88,7 +93,45 @@ const RecomendationDetail = () => {
            })
     }
 
+    const putLikeToRecomendation = () => { 
+      const likeData = { 
+          date: date,
+          userId: userCtx.userId,
+          userName: userCtx.userName,
+          userProfileImage: userCtx.userProfileImage,
+          addresseeId: addresseeId,        
+      };
+  
+      axios.put(`http://localhost:4000/movies/update/${recomendationId}`, { likedata: likeData })
+          .then((res) => {
+              console.log(res.data);
+              getPublicationData()
+          })
+          .catch((err) => { 
+              console.log(err);
+          });
+    };
+
+    const removeLike = () => { 
+
+      const userData = { 
+        userId: userCtx.userId, 
+        userName: userCtx.userName
+    };
+    console.log('Datos a enviar:', userData);
+
+    axios.put(`http://localhost:4000/movies/removeLike/${recomendationId}`, { userData: userData })
+         .then((res) => {
+            console.log(res.data);
+            getPublicationData()
+        })
+        .catch((err) => { 
+            console.log(err);
+        });
+    }
+
     useEffect(() => { 
+      console.log(addresseeId)
       setTimeout(() => { 
        setLoad(false)
       }, 1000)
@@ -98,21 +141,34 @@ const RecomendationDetail = () => {
   return (
     <div>
           <NavBarComponent/>
-          <div className='flex flex-col 2xl:flex-row xs:mt-60 md:mt-56 lg:mt-24 xl:mt-16 2xl:mt-12 items-center gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
-            <div>
+          <div className='flex flex-col  xl:flex-row mt-16 md:mt-24 lg:mt-24 xl:mt-16 2xl:mt-12 items-center gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
+            <div className='flex flex-col'>
               <CardMovieIndividual moviesData={recomendationGralData}/>
+                <div className='flex items-center justify-center mt-3 cursor-pointer' title="Me Gusta">
+                 {
+                 dontLike ?  <img src={noLike} className='h-8 w-8' onClick={() => putLikeToRecomendation()}/> 
+                 :  
+                 <img src={like} className='h-8 -w-8' onClick={()=> removeLike()}/>
+                 }
+                </div>
             </div>
            {load ?
             <Loading/>
                :
-            <div className='flex flex-col  justify-center'>
+            <div className='flex flex-col justify-center'>
               <div>
                 {recomendationGralData.map((data) =>  (
-                  <div className='flex flex-col justify-start '>
-                    <div className='flex gap-2 items-center'>
-                      <Avatar src={data.userProfileImage} size="md" />
-                      <p className='text-sm font-medium'>{data.userName}</p>
-                    </div>
+                  <div className='flex flex-col justify-between '>
+                      <div className='flex justify-between items-center'>
+                          <div className='flex justify-start gap-2 items-center'>
+                            <Avatar src={data.userProfileImage} size="md" />
+                            <p className='text-sm font-medium'>{data.userName} </p>
+                          </div>
+                          <div className='flex justify-enditems-center'>
+                             <LikesModal quantity={quantityLikes} data={recomendationGralData}/>
+                          </div>
+                      </div>
+                     
                      <div className='flex justify-start mt-2'>
                        <p className='text-sm xl:text-lg font-medium'>Comentario del autor: </p>
                      </div>

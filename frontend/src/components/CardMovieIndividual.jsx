@@ -28,7 +28,7 @@ const CardMovieIndividual = ({ moviesData }) => {
             <div key={mov._id} className="w-full ">
             <Card
                 isFooterBlurred
-                className="w-[600px] h-[400px] 2xl:w-[380px] 2xl:h-[650px] col-span-12 sm:col-span-7 bg-cover bg-center"
+                className="w-[300px] h-[270px] md:w-[600px] md:h-[400px] xl:w-[380px] xl:h-[650px] col-span-12 sm:col-span-7 bg-cover bg-center"
                 style={{
                     backgroundImage: `url(${mov.movieImage})`,
                     backgroundSize: "100% 100%",
