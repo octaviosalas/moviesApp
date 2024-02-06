@@ -26,6 +26,7 @@ const CreateRecomendation = ({updateMovies}) => {
     const [duration, setDuration] = useState("")
     const [director, setDirector] = useState("")
     const [actors, setActors] = useState("")
+    const [creationDate, setCreationDate] = useState("")
     const [platform, setPlatform] = useState("")
     const [observation, setObservation] = useState("")
     const [score, setScore] = useState("")
@@ -81,6 +82,7 @@ const CreateRecomendation = ({updateMovies}) => {
         date: actualDate,
         language: language,
         actor: actors,
+        creationDate: creationDate,
         director: director,
         userName: userCtx.userName,
         UserEmail: userCtx.userEmail,
@@ -111,7 +113,9 @@ const CreateRecomendation = ({updateMovies}) => {
     }, [])
 
 
+    
     const getData = (e) => { 
+      const apiKey = 'b92d04283671f7f97745a40106748075';
       if(e.length === 0) { 
         setFilteredData("")
         setTitle("")
@@ -121,10 +125,13 @@ const CreateRecomendation = ({updateMovies}) => {
         setLanguage("")
         setDirector("")
         setActors("")
+        setScore("")
+        setPlatform("")
+        setObservation("")
       }
        console.log(e)
        setTitle(e)
-       axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&t=${e}`)
+       axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${e}`)
             .then((res) => { 
               console.log(res.data)
               setFilteredData(res.data)
@@ -135,50 +142,42 @@ const CreateRecomendation = ({updateMovies}) => {
     }
 
     const chooseTheMovie = (movie) => { 
-      setTitle(movie.Title)
-      setDuration(movie.Runtime)
-      setMovieImage(movie.Poster)
-      setLanguage(movie.Language)
-      setShowPhotoIcon(false)
-      setFilteredData("")
-      setDirector(movie.Director)
-      setActors(movie.Actors)
+      console.log(movie)
+      const movieId = movie.id
+      const apiKey = 'b92d04283671f7f97745a40106748075';
+       axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`)
+            .then((res) => {
+              const posterPath = res.data.poster_path;
+              const posterUrl = `https://image.tmdb.org/t/p/w500${posterPath}`;
+              console.log(res.data)
+              setMovieImage(posterUrl)
+              setTitle(movie.original_title)
+              setDuration(res.data.runtime)
+              setLanguage(res.data.spoken_languages.map((l) => l.name))
+              setScore(res.data.vote_average)
+              setFilteredData("")
+              setCreationDate(res.data.release_date)
+            })
+            .catch((err) => console.log(err));
+
+  
     }
 
-    const vacio = []
-
-    const userOtherApi = async () => {
-      const apiKey = "b92d04283671f7f97745a40106748075";
-      const totalPages = 20;  // Especifica el número total de páginas que deseas obtener
-    
-      try {
-        for (let page = 1; page <= totalPages; page++) {
-          const response = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&page=${page}`);
-          console.log(`Página ${page} - Resultados:`, response.data.results);
-          vacio.push(...response.data.results);
-          console.log(vacio)
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    useEffect(() => { 
-      userOtherApi()
-    }, [])
+ 
     
 
 
     return (
   <>
      <div className="flex flex-wrap gap-3">
-       <small color="secondary" variant="shadow" className="text-violet-700 cursor-pointer font-bold" key={size} onClick={() => handleOpen(size)}> Create Recomendation</small>  
+       <Button color="secondary" variant="shadow" className="text-white cursor-pointer font-bold" key={size} onPress={() => handleOpen(size)}> Create Recomendation</Button>  
      </div>
           <Modal size={size} isOpen={isOpen} onClose={onClose} >
             <ModalContent>
               {(onClose) => (
                 <>
                   <ModalHeader className="flex flex-col gap-1 font-bold">Create Recomendation </ModalHeader>
-                  <ModalBody>
+                  <ModalBody onClick={() => setFilteredData("")}>
                     <div className="flex gap-16 justify-center items-center">
                         <div className="flex flex-col items-center justify-center">
                           <div className="flex flex-col items-center justify-center relative mt-2 w-60">
@@ -190,9 +189,13 @@ const CreateRecomendation = ({updateMovies}) => {
                                 className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm"
                                 onChange={(e) => getData(e.target.value)}/>
                                 {filteredData !== "" ? 
-                                <div className="bg-white shadow-lg">
-                                  <p onClick={() => chooseTheMovie(filteredData)}>{filteredData.Title}</p> 
-                                </div>
+                                <div className='options-container absolute top-16 z-20 bg-white border shadow-xl rounded-lg mt-1 w-46 items-center justify-center overflow-y-auto max-h-[300px]' >
+                                  {filteredData.results.map((movie) => (
+                                 <p className="text-black text-md font-medium mt-1" key={movie.id} onClick={() => chooseTheMovie(movie)}>
+                                   {movie.original_title}
+                                 </p>
+                               ))}
+                             </div>
                                 :
                                 null
                                 }
@@ -232,6 +235,7 @@ const CreateRecomendation = ({updateMovies}) => {
                                 className="mt-2 w-60 cursor-pointer rounded-lg border border-none text-sm" 
                                 onChange={(e) => setLanguage(e.target.value)}
                             />
+                            
                             <Input  
                                 type="number" 
                                 label="Score (1-10)" 
@@ -437,6 +441,8 @@ const CreateRecomendation = ({updateMovies}) => {
        console.log(e)
        setTitle(e)
        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${e}`)
+       https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${e}
+
             .then((res) => { 
               console.log(res.data)
               setFilteredData(res.data)

@@ -5,7 +5,7 @@ import {Input} from "@nextui-org/react";
 
 
 
-const Search = () => {
+const Search = ({inputValue}) => {
   return (
     <div>
         <Input
@@ -21,6 +21,7 @@ const Search = () => {
           startContent={<SearchIcon size={18} />}
           type="search"
           color={"secondary"}
+          onChange={(e) => inputValue(e.target.value)}
         />
     </div>
   )

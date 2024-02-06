@@ -6,11 +6,12 @@ import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../store/userContext'
 import { useContext } from "react";
 import CreateRecomendation from "./CreateRecomendation.jsx";
+import moviesIcon from "../img/moviesIcon.png"
 
-const NavBarComponent = ({updateMovies}) =>  {
+const NavBarComponent = () =>  {
 
   const userCtx = useContext(UserContext)
-
+  const navigate = useNavigate()
 
  
 
@@ -19,26 +20,24 @@ const NavBarComponent = ({updateMovies}) =>  {
     <div className="fixed z-50 top-0 left-0 right-0 inset-x-0  bg-gray-300 dark:bg-black text-white h-16 w-full">
        <Navbar isBordered>
       <NavbarContent justify="start">
-        <NavbarBrand className="mr-4">
-          <AcmeLogo />
-          <p className="hidden sm:block font-bold  text-black ">Movies App</p>
+        <NavbarBrand className="">
+          <moviesIcon />
+        <p className="hidden sm:block font-bold text-black cursor-pointer" onClick={() => navigate("/main")}>Movies App</p>
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-6">         
-          <NavbarItem>
-             <CreateRecomendation updateMovies={updateMovies}/> 
-          </NavbarItem>     
+        <NavbarContent className="hidden sm:flex ">         
+            
         </NavbarContent>
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
         <Input
-          classNames={{
-            base: "w-72 sm:max-w-[10rem] h-10",
+            color={"secondary"}
+            classNames={{
             mainWrapper: "h-full",
             input: "text-small",
             inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
           }}
-          className="w-72"
+          className="w-56 lg:w-64 xl:w-80 h-12 text-black"
           placeholder="Type to search..."
           size="sm"
           startContent={<SearchIcon size={18} />}

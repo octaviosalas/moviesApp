@@ -9,6 +9,7 @@ import NavBarComponent from './Navbar'
 import GenItems from './GenItems'
 import Search from './Search'
 import Loading from './Loading'
+import DemoCarousel from './Carousel'
 
 const Main = () => {
 
@@ -36,18 +37,25 @@ const Main = () => {
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <NavBarComponent updateMovies={getMovies}/>
+      <NavBarComponent/>
 
         {load ? 
           <Loading/>
         :
         <>
-          <div className='flex items-center justify-center mt-36'>
+          <div className='mt-36'>
+            <CreateRecomendation updateMovies={getMovies}/>
+          </div>
+
+          <div className='flex items-center justify-center mt-6'>
             <Search/> 
           </div>
           
           <div className='flex  items-center justify-center mt-12'>
             <GenItems/>
+          </div>
+          <div className='mt-12'>
+            <DemoCarousel/>
           </div>
         </>
         }

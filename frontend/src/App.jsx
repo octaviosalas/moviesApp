@@ -8,6 +8,8 @@ import Register from './components/Register'
 import { UserProvider } from './store/userContext'
 import FilteredMoviesByCategory from './components/FilteredMoviesByCategory'
 import RecomendationDetail from './components/RecomendationDetail'
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
 
 
 function App() {

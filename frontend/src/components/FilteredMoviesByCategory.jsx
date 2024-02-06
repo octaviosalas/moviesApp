@@ -42,6 +42,17 @@ const FilteredMoviesByCategory = () => {
         getMovies()
     }, [category])
 
+    const handleChange = (e) => { 
+      const searchTerm = e.toLowerCase(); 
+      const filteringFilteredData = filteredMovies.filter((mov) => mov.title.toLowerCase().includes(searchTerm));
+      if(e.length !== 0) { 
+        setFilteredMovies(filteringFilteredData)
+      } else { 
+        getMovies()
+      }   
+      
+    }
+
   return (
     <div className='flex flex-col text-center items-center justify-center'>
        <NavBarComponent updateMovies={getMovies}/>
@@ -60,7 +71,7 @@ const FilteredMoviesByCategory = () => {
        ) : (
       <div className='mt-24 md:mt-0'>
         <div className='flex items-center justify-center'>
-          <Search />
+          <Search inputValue={handleChange}/>
         </div>
         <div className='mt-12'>
           <Posts movies={filteredMovies} />
