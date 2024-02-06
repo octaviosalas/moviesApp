@@ -116,7 +116,7 @@ const RecomendationDetail = () => {
                      <div className='flex justify-start mt-2'>
                        <p className='text-sm xl:text-lg font-medium'>Comentario del autor: </p>
                      </div>
-                     <div className='flex items-start justify-start mt-2'>
+                     <div className='flex text-start items-start justify-start mt-2'>
                         <p>{data.observation}</p>
                      </div>
                   </div>
