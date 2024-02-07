@@ -15,7 +15,7 @@ const Search = ({inputValue}) => {
             input: "text-small",
             inputWrapper: "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
           }}
-          className="w-72 md:w-[350px] xl:w-[500px] 2xl:w-[650px]"
+          className="w-72 md:w-[350px] xl:w-[500px] 2xl:w-[650px] bg-white rounded-lg text-black"
           placeholder="Type to search..."
           size="sm"
           startContent={<SearchIcon size={18} />}

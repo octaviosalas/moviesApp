@@ -17,12 +17,14 @@ const NavBarComponent = () =>  {
 
 
   return (
-    <div className="fixed z-50 top-0 left-0 right-0 inset-x-0  bg-gray-300 dark:bg-black text-white h-16 w-full">
-       <Navbar isBordered>
+    <div className="fixed z-50 top-0 left-0 right-0 inset-x-0 bg-violet-500  text-white h-16 w-full" >
+       <Navbar isBordered >
       <NavbarContent justify="start">
         <NavbarBrand className="">
-          <moviesIcon />
-        <p className="hidden sm:block font-bold text-black cursor-pointer" onClick={() => navigate("/main")}>Movies App</p>
+          <div className="flex gap-4 items-center">
+            <img src={moviesIcon} className="h-10 w-10"/>
+            <p className="hidden sm:block font-bold text-white cursor-pointer" onClick={() => navigate("/main")}>Movies App</p>
+          </div>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex ">         
             

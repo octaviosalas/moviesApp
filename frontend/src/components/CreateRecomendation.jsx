@@ -17,7 +17,7 @@ const CreateRecomendation = ({updateMovies}) => {
 
     const {isOpen, onOpen, onClose} = useDisclosure();
     const userCtx = useContext(UserContext)
-    const [size, setSize] = React.useState('5xl')
+    const [size, setSize] = React.useState('2xl')
     const [actualDate, setActualDate] = useState(getDate())
     const [title, setTitle] = useState("")
     const [allGens, setAllGens] = useState("")
@@ -172,15 +172,15 @@ const CreateRecomendation = ({updateMovies}) => {
      <div className="flex flex-wrap gap-3">
        <Button color="secondary" variant="shadow" className="text-white cursor-pointer font-bold" key={size} onPress={() => handleOpen(size)}> Create Recomendation</Button>  
      </div>
-          <Modal size={size} isOpen={isOpen} onClose={onClose} >
+          <Modal size={size} isOpen={isOpen} onClose={onClose}>
             <ModalContent>
               {(onClose) => (
                 <>
-                  <ModalHeader className="flex flex-col gap-1 font-bold">Create Recomendation </ModalHeader>
-                  <ModalBody onClick={() => setFilteredData("")}>
-                    <div className="flex flex-col md:flex-row gap-16 justify-center items-center">
+                  <ModalHeader className="flex flex-col gap-12 font-bold w-auto">Create Recomendation </ModalHeader>
+                  <ModalBody onClick={() => setFilteredData("")} >
+                    <div className="flex flex-col md:flex-row gap-16 items-center">
 
-                        <div className="flex flex-row md:flex-col items-center justify-center">
+                        <div className="flex flex-row md:flex-col items-center justify-start">
                             <div className="flex flex-col">
                                 <div className="flex md:flex-col items-center gap-2 justify-center">
                                    <div className="flex flex-col items-center justify-center relative mt-2 w-60">
@@ -278,15 +278,15 @@ const CreateRecomendation = ({updateMovies}) => {
  
                          </div>
 
-                         <div className="flex flex-col items-center justify-center">
-                            <p className="font-bold text-black text-sm mt-4">
-                                Upload a Picture of the Movie
-                            </p>      
+                         <div className="flex flex-col items-center justify-end">
+                              <p className="font-bold text-black text-sm mt-4">
+                                  Upload a Picture of the Movie
+                              </p>      
                                 <Dropzone onDrop={handleDropImage} className="cursor-pointer">
                                 {({ getRootProps, getInputProps }) => (
                                     <div {...getRootProps({ className: 'dropzone' })} className=' flex justify-center'>
                                     <input {...getInputProps()} />
-                                       <div className=" avatar mt-4 w-72 h-60  flex justify-center rounded-2xl border border-dashed border-gray-900/25 bg-cover bg-center"
+                                       <div className=" avatar mt-4 w-72 h-96  flex justify-center rounded-2xl border border-dashed border-gray-900/25 bg-cover bg-center"
                                            style={{ backgroundImage: `url(${movieImage})`, backgroundSize: 'cover',   backgroundRepeat: "no-repeat", }}>
                                              <div className="text-center mt-16">
                                                   {showPhotoIcon ?  <PhotoIcon className="mx-auto mt-6 h-12 w-12 text-gray-300" aria-hidden="true" /> : null}
