@@ -36,4 +36,22 @@ export const createNewRecomendation = async (req, res) => {
     }
   }
 
+  export const deleteComment = async (req, res) => {
+ 
+     const {commentId} = req.params
+     console.log(commentId)
+     try {
+      const deletedComment = await Comments.findByIdAndDelete({_id: commentId});
   
+      if (deletedComment) {
+        res.status(200).json({ message: 'Comentario eliminada correctamente', deleted: deletedComment });
+      } else {
+        res.status(404).json({ message: 'Comentario no encontrada' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al eliminar la recomendacion' });
+    }
+  }
+
+

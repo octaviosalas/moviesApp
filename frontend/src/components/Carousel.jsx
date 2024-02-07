@@ -54,7 +54,7 @@ const DemoCarousel = () => {
             <div className='flex items-center justify-center mt-2'>
                 <Carousel showArrows={true} onChange={onChange} showThumbs={false} onClickThumb={onClickThumb}>
                     {bestMovies.map((best) => ( 
-                         <div className='h-[300px] lg:h-[450px] xl:h-[500px] 2xl:h-[520px] w-auto bg-violet-200 cursor-pointer' onClick={() => viewMovieDetail(best.recomendationId)}>
+                         <div className='h-[250px] lg:h-[350px] xl:h-[400px] 2xl:h-[520px] w-auto bg-violet-200 cursor-pointer' onClick={() => viewMovieDetail(best.recomendationId)}>
                             <img src={best.image} className=' w-full h-full'/>              
                         </div>
                     ))}

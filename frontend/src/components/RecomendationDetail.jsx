@@ -130,6 +130,18 @@ const RecomendationDetail = () => {
         });
     }
 
+    const deleteComment = (commentId) => { 
+        console.log(commentId)
+        axios.delete(`http://localhost:4000/comments/${commentId}`)
+             .then((res) => { 
+              console.log(res.data)
+              getComments()
+             })
+             .catch((err) => { 
+              console.log(err)
+             })
+    }
+
     useEffect(() => { 
       console.log(addresseeId)
       setTimeout(() => { 
@@ -142,7 +154,11 @@ const RecomendationDetail = () => {
     <div>
           <NavBarComponent/>
           <div className='flex flex-col  xl:flex-row mt-16 md:mt-24 lg:mt-24 xl:mt-16 2xl:mt-12 items-center gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
-            <div className='flex flex-col'>
+            
+           {load ?
+            <Loading text={"Crgando Recomendacion"}/>
+               :<>
+               <div className='flex flex-col'>
               <CardMovieIndividual moviesData={recomendationGralData}/>
                 <div className='flex items-center justify-center mt-3 cursor-pointer' title="Me Gusta">
                  {
@@ -152,9 +168,6 @@ const RecomendationDetail = () => {
                  }
                 </div>
             </div>
-           {load ?
-            <Loading/>
-               :
             <div className='flex flex-col justify-center'>
               <div>
                 {recomendationGralData.map((data) =>  (
@@ -186,13 +199,22 @@ const RecomendationDetail = () => {
                    {recomendationCommentsReceived.length !== 0 ? 
                    <div>
                       {recomendationCommentsReceived.map((com) => ( 
-                        <div className='flex items-center mt-2'> 
+                        <div className='flex items-center mt-2' key={com._id}> 
+                           
                             <div className='flex justify-start gap-4'>
                               <Avatar src={com.creatorProfileImage} size="sm" />
                             </div>
                             <div className='ml-2 flex flex-col items-start justify-start'>
                               <p className='text-sm font-medium'>{com.creatorName}</p> 
-                              <p className='text-xs'>{com.comment}</p>                           
+                              <p className='text-xs'>{com.comment}</p>   
+                              {
+                                com.creatorId === userCtx.userId ?
+                                  <p className='text-xs text-zinc-500 cursor-pointer underline' onClick={() => deleteComment(com._id)}>
+                                    Eliminar
+                                  </p>  
+                                  :
+                                null
+                              }                     
                             </div>
                         </div>
                       ))}
@@ -230,6 +252,7 @@ const RecomendationDetail = () => {
                     </div> */}
 
             </div>
+            </>
             }
           </div>
     </div>

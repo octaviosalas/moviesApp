@@ -153,7 +153,8 @@ const CreateRecomendation = ({updateMovies}) => {
               setMovieImage(posterUrl)
               setTitle(movie.original_title)
               setDuration(res.data.runtime)
-              setLanguage(res.data.spoken_languages.map((l) => l.name))
+              setLanguage(res.data.spoken_languages.map((l) => l.name)[0])
+              console.log(res.data.vote_average)
               setScore(res.data.vote_average)
               setFilteredData("")
               setCreationDate(res.data.release_date)
@@ -172,7 +173,7 @@ const CreateRecomendation = ({updateMovies}) => {
      <div className="flex flex-wrap gap-3">
        <Button color="secondary" variant="shadow" className="text-white cursor-pointer font-bold" key={size} onPress={() => handleOpen(size)}> Create Recomendation</Button>  
      </div>
-          <Modal size={size} isOpen={isOpen} onClose={onClose}>
+          <Modal size={size} isOpen={isOpen} onClose={onClose} className="max-h-[450px] overflow-y-auto xl:h-auto">
             <ModalContent>
               {(onClose) => (
                 <>

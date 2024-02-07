@@ -2,6 +2,9 @@ import recomendations from "../models/recomendations.js";
 
 import Recomendations from "../models/recomendations.js";
 
+
+
+
 export const getAllRecomendations = async (req, res) => {
     try {
       const recomendations = await Recomendations.find();
@@ -92,10 +95,10 @@ export const removeLike = async (req, res) => {
   
 
   export const deleteRecomendation = async (req, res) => {
-    const { movieId } = req.params;
-  
+    const { recomendationId } = req.params;
+     console.log(recomendationId)
     try {
-      const deletedRecomendation = await Recomendations.findByIdAndDelete(movieId);
+      const deletedRecomendation = await Recomendations.findByIdAndDelete({_id: recomendationId});
   
       if (deletedRecomendation) {
         res.status(200).json({ message: 'Recomendacion eliminada correctamente', deleted: deletedRecomendation });
@@ -107,3 +110,4 @@ export const removeLike = async (req, res) => {
       res.status(500).json({ error: 'Error al eliminar la recomendacion' });
     }
   };
+

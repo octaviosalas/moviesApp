@@ -1,10 +1,10 @@
 import React from 'react'
 import {Spinner} from "@nextui-org/react";
 
-const Loading = () => {
+const Loading = ({text}) => {
   return (
     <div>
-      <Spinner label="Cargando.." color="secondary" labelColor="secondary"/>
+      <Spinner label={text} color="secondary" labelColor="secondary"/>
     </div>
   )
 }

@@ -54,13 +54,14 @@ const FilteredMoviesByCategory = () => {
     }
 
   return (
-    <div className='flex flex-col text-center items-center justify-center'>
+    <>
+  
        <NavBarComponent updateMovies={getMovies}/>
-
-       {load ? (
-             <Loading />
-      ) : (   
-     <>
+        <div className='flex flex-col text-center items-center justify-center h-screen border'>
+          {load ? (
+             <Loading text={"Cargando Categoria.."}/>
+            ) : (   
+          <>
      {withOutMovies ? (
       <div className='mt-12'>
         <p className='font-bold text-md'>Al momento, no hay recomendaciones para la categoría {category}</p>
@@ -69,7 +70,7 @@ const FilteredMoviesByCategory = () => {
         </Link>
       </div>
        ) : (
-      <div className='mt-24 md:mt-0'>
+      <div className='mt-24 md:mt-12'>
         <div className='flex items-center justify-center'>
           <Search inputValue={handleChange}/>
         </div>
@@ -81,6 +82,7 @@ const FilteredMoviesByCategory = () => {
   </>
 )}
     </div>
+    </>
   )
 }
 

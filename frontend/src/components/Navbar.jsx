@@ -13,6 +13,17 @@ const NavBarComponent = () =>  {
   const userCtx = useContext(UserContext)
   const navigate = useNavigate()
 
+  const logOutSession = () => { 
+    userCtx.updateUser("")
+    userCtx.updateUserEmail("")
+    userCtx.updateUserProfileImage("")
+    userCtx.updateUserName("")
+    navigate("/")
+  }
+
+  const getMyMovies = () => { 
+    navigate(`/myMovies/${userCtx.userId}`)
+  }
  
 
 
@@ -69,15 +80,9 @@ const NavBarComponent = () =>  {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">{userCtx.userEmail}</p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
-            </DropdownItem>
+            <DropdownItem key="settings" onClick={() => getMyMovies()}>Mis Publicaciones</DropdownItem>
+            <DropdownItem key="team_settings">Mis Grupos</DropdownItem>
+            <DropdownItem key="analytics" onClick={() => logOutSession()}>Cerrar Sesion</DropdownItem>         
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>

@@ -5,9 +5,10 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org
 import CreateComment from "./CreateComment";
 import CreateRecomendation from "./CreateRecomendation";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import DeletePublicationModal from "./DeletePublicationModal";
 
-
-const CardMovie = ({ moviesData }) => {
+const MyMoviesCard = ({ updateMovies, moviesData }) => {
 
   const navigate = useNavigate();
   const [addresseeId, setAddresseeId] = useState("")
@@ -19,11 +20,24 @@ const CardMovie = ({ moviesData }) => {
     navigate(`/movies/${category}`);
   };
 
+  const goToLetMyComment = (recomendationId) => { 
+    navigate(`/movie/${recomendationId}`);
+  }
 
+  const deleteMyRecomendation = (recomendationId) => { 
+    axios.delete(`http://localhost:4000/movies/${recomendationId}`)
+         .then((res) => { 
+           console.log(res.data)
+           updateMovies()
+         })
+         .catch((err) => { 
+           console.log(err)
+         })
+     }
 
   return (
    
- <div className={moviesData.length <= 3 ? "flex justify-center gap-6 mx-auto" : `grid grid-cols-1 sm:grid-cols-1 md:grid-cols-${moviesData.length < 3 ? moviesData.length : 2} xl:grid-cols-3 2xl:grid-cols-4 gap-6 mx-auto`}>
+    <div className={moviesData.length <= 3 ? "flex justify-center gap-6 mx-auto" : `grid grid-cols-1 sm:grid-cols-1 md:grid-cols-${moviesData.length < 3 ? moviesData.length : 2} xl:grid-cols-3 2xl:grid-cols-4 gap-6 mx-auto`}>
     {moviesData.map((mov) => (
             <div key={mov._id} className="w-full ">
             <Card
@@ -39,12 +53,15 @@ const CardMovie = ({ moviesData }) => {
                    <h4 className="text-white font-bold text-xl">{mov.title}</h4>
                    <Dropdown>
                         <DropdownTrigger>
-                            <small  variant="bordered" className="cursor-pointer text-md text-white"> ... </small>
+                            <small  variant="bordered" className="cursor-pointer font-bold text-xl text-white"> ... </small>
                         </DropdownTrigger>
                         <DropdownMenu >
                             <DropdownItem key="new">
-                                  <Link to={`/movie/${mov._id}`}><p>Comentar</p></Link> 
-                                </DropdownItem>
+                              <p onClick={() => goToLetMyComment(mov._id)} className="text-black font.medium">Comentar</p>                             
+                            </DropdownItem>
+                            <DropdownItem key="new">
+                              <p onClick={() => deleteMyRecomendation(mov._id)}>Eliminar</p>              
+                            </DropdownItem>
                         </DropdownMenu>
                         </Dropdown>
                  </div>
@@ -66,10 +83,10 @@ const CardMovie = ({ moviesData }) => {
                     </div>
                         <Link to={`/movie/${mov._id}`}>
                             <Button radius="full" className="font-bold text-black" size="sm" onClick={() => goTo(`${mov.category}`)}> Ver </Button>
-                        </Link>                    
+                        </Link>                                    
                 </CardFooter>
-            </Card>
-          
+                
+            </Card>          
             </div>
         ))}
       </div>
@@ -78,4 +95,4 @@ const CardMovie = ({ moviesData }) => {
   );
 };
 
-export default CardMovie;
+export default MyMoviesCard;

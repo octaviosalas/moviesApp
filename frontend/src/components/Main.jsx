@@ -40,7 +40,7 @@ const Main = () => {
       <NavBarComponent/>
 
         {load ? 
-          <Loading/>
+          <Loading text={"Cargando Datos"}/>
         :
         <>
           <div className='mt-36'>
