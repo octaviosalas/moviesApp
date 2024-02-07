@@ -57,7 +57,7 @@ const FilteredMoviesByCategory = () => {
     <>
   
        <NavBarComponent updateMovies={getMovies}/>
-        <div className='flex flex-col text-center items-center justify-center h-screen border'>
+        <div className='flex flex-col text-center items-center justify-center h-screen '>
           {load ? (
              <Loading text={"Cargando Categoria.."}/>
             ) : (   

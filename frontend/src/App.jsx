@@ -10,6 +10,7 @@ import FilteredMoviesByCategory from './components/FilteredMoviesByCategory'
 import RecomendationDetail from './components/RecomendationDetail'
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import MyRecomendations from './components/MyRecomendations'
+import MyGroups from './components/MyGroups'
 
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
                 <Route path="/main" element={<Main />} />    
                 <Route path="/movies/:category" element={<FilteredMoviesByCategory/>}   />
                 <Route path="/movie/:recomendationId" element={<RecomendationDetail/>}   />
-                <Route path="/myMovies/:userId" element={<MyRecomendations/>}   />
+                <Route path="/myMovies/:userId" element={<MyRecomendations/>}/>
+                <Route path="/myGroups/:userId" element={<MyGroups/>}/>
               </Routes>
         </UserProvider>
       </> 

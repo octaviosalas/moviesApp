@@ -49,6 +49,10 @@ const recomendationsSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    groupId: { 
+      type: String,
+      required: false
+    },
     likes: {
         type: [{ 
             date: String,

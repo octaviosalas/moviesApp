@@ -4,7 +4,7 @@ import {Spinner} from "@nextui-org/react";
 const Loading = ({text}) => {
   return (
     <div>
-      <Spinner label={text} color="secondary" labelColor="secondary"/>
+      <Spinner label="Cargando" color="secondary" labelColor="secondary"/>
     </div>
   )
 }

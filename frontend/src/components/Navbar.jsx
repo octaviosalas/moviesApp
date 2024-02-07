@@ -7,6 +7,7 @@ import { UserContext } from '../store/userContext'
 import { useContext } from "react";
 import CreateRecomendation from "./CreateRecomendation.jsx";
 import moviesIcon from "../img/moviesIcon.png"
+import CreateNewGroupModal from "./CreateNewGroupModal.jsx";
 
 const NavBarComponent = () =>  {
 
@@ -24,6 +25,10 @@ const NavBarComponent = () =>  {
   const getMyMovies = () => { 
     navigate(`/myMovies/${userCtx.userId}`)
   }
+
+  const getMyGroups= () => { 
+    navigate(`/myGroups/${userCtx.userId}`)
+  }
  
 
 
@@ -32,9 +37,10 @@ const NavBarComponent = () =>  {
        <Navbar isBordered >
       <NavbarContent justify="start">
         <NavbarBrand className="">
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 justify-center items-center">
             <img src={moviesIcon} className="h-10 w-10"/>
             <p className="hidden sm:block font-bold text-white cursor-pointer" onClick={() => navigate("/main")}>Movies App</p>
+            <CreateNewGroupModal/>
           </div>
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex ">         
@@ -81,7 +87,7 @@ const NavBarComponent = () =>  {
               <p className="font-semibold">{userCtx.userEmail}</p>
             </DropdownItem>
             <DropdownItem key="settings" onClick={() => getMyMovies()}>Mis Publicaciones</DropdownItem>
-            <DropdownItem key="team_settings">Mis Grupos</DropdownItem>
+            <DropdownItem key="team_settings" onClick={() => getMyGroups()}>Mis Grupos</DropdownItem>
             <DropdownItem key="analytics" onClick={() => logOutSession()}>Cerrar Sesion</DropdownItem>         
           </DropdownMenu>
         </Dropdown>

@@ -44,7 +44,7 @@ const Main = () => {
         :
         <>
           <div className='mt-36'>
-            <CreateRecomendation updateMovies={getMovies}/>
+            <CreateRecomendation type={"general"} updateMovies={getMovies}/>
           </div>
 
           <div className='flex items-center justify-center mt-6'>

@@ -156,7 +156,7 @@ const RecomendationDetail = () => {
           <div className='flex flex-col  xl:flex-row mt-16 md:mt-24 lg:mt-24 xl:mt-16 2xl:mt-12 items-center gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
             
            {load ?
-            <Loading text={"Crgando Recomendacion"}/>
+            <Loading/>
                :<>
                <div className='flex flex-col'>
               <CardMovieIndividual moviesData={recomendationGralData}/>
@@ -197,6 +197,8 @@ const RecomendationDetail = () => {
                   <h4 className='text-sm xl:text-lg font-medium'>Comentarios ({recomendationCommentsReceived.length}) :</h4>
                 </div>
                    {recomendationCommentsReceived.length !== 0 ? 
+
+
                    <div>
                       {recomendationCommentsReceived.map((com) => ( 
                         <div className='flex items-center mt-2' key={com._id}> 
@@ -219,6 +221,8 @@ const RecomendationDetail = () => {
                         </div>
                       ))}
                     </div> 
+
+                    
                     :
                    <p className='text-md font-medium'>Esta publicacion aun no ha recibido comentarios</p>}
                </div>
@@ -260,3 +264,4 @@ const RecomendationDetail = () => {
 }
 
 export default RecomendationDetail
+
