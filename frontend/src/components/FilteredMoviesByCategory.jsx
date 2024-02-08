@@ -57,7 +57,7 @@ const FilteredMoviesByCategory = () => {
     <>
   
        <NavBarComponent updateMovies={getMovies}/>
-        <div className='flex flex-col text-center items-center justify-center h-screen '>
+        <div className='flex flex-col text-center items-center justify-center min-h-screen '>
           {load ? (
              <Loading text={"Cargando Categoria.."}/>
             ) : (   
@@ -70,7 +70,7 @@ const FilteredMoviesByCategory = () => {
         </Link>
       </div>
        ) : (
-      <div className='mt-24 md:mt-12'>
+      <div className='mt-24 lg:mt-20'>
         <div className='flex items-center justify-center'>
           <Search inputValue={handleChange}/>
         </div>
@@ -81,7 +81,7 @@ const FilteredMoviesByCategory = () => {
     )}
   </>
 )}
-    </div>
+        </div>
     </>
   )
 }

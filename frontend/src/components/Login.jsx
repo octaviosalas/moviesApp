@@ -18,9 +18,22 @@ const Login = () => {
     const [errorMessage, setErrorMessage] = useState(false)
     const [textMessage, setTextMessage] = useState(false)
 
-  
+    const getNotifications = (userId) => { 
+       axios.get(`http://localhost:4000/notifications/${userId}`)
+           .then((res) => { 
+                console.log("Notificaciones", res.data);
+                console.log("Cantidad", res.data.length);
+                userCtx.updateUserNotifications(res.data);
+                userCtx.updateUserQuantityNotifications(res.data.length);
+                navigate("/main");
+            })
+          .catch((err) => { 
+              console.log(err);
+          });
+          return
+    }
 
-  const loginMySession = () => { 
+    const loginMySession = () => { 
       if(email.length === 0 || password.length === 0) { 
         setErrorMessage(true)
         setTextMessage("Debes completar todos los campos")
@@ -54,14 +67,18 @@ const Login = () => {
                   setPassword("")
                 }, 2500)
               } else { 
-                setSuccesMessage(true)       
-                userCtx.updateUser(res.data.id) 
-                userCtx.updateUserEmail(res.data.email)
-                userCtx.updateUserProfileImage(res.data.photo)
-                userCtx.updateUserName(res.data.name)      
-                setTimeout(() => {
-                    navigate("/main")
-                }, 2000);
+                setSuccesMessage(true);  
+                  const userId = res.data.id
+                  userCtx.updateUser(res.data.id);
+                  userCtx.updateUserEmail(res.data.email);
+                  userCtx.updateUserProfileImage(res.data.photo);
+                  userCtx.updateUserName(res.data.name);
+                  setTimeout(() => {
+                      console.log("El userId que mando", userId);
+                      if (userId.length !== 0) {
+                        getNotifications(userId)
+                      }
+                  }, 1500);
               }            
              })
              .catch((err) => { 
@@ -71,19 +88,12 @@ const Login = () => {
     } 
 
 
-    useEffect(() => { 
-       console.log(userCtx.userEmail)
-       console.log(userCtx.userId)
-       console.log(userCtx.userName)
-       console.log(userCtx.userProfileImage)
-    }, [userCtx.userEmail, userCtx.userId, userCtx.userName, userCtx.userProfileImage])
-     
   return (
 
     <>
     {succesMessagge ?
     <>
-      <NavBarComponent/> 
+      <NavBarComponent updateNotifications={getNotifications}/> 
       <div className='flex flex-col items-center justify-center h-screen'>
          <div className='mt-4'> 
             <Loading text={"Iniciando Sesion"}/>
@@ -93,7 +103,7 @@ const Login = () => {
    
     :
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
-    <NavBarComponent/>              
+    <NavBarComponent updateNotifications={getNotifications}/>              
       <div className="flex flex-col items-center justify-center sm:mx-auto sm:w-full sm:max-w-sm">  
               <div className=" flex text-center h-16 w-16 justify-center rounded-full" style={{backgroundColor:"#D3D3D3"}}>
                 <img src="https://cdn-icons-png.flaticon.com/512/2991/2991494.png" className="h-12 w-12 m-2"/>

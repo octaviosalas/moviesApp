@@ -11,8 +11,13 @@ import Search from './Search'
 import Loading from './Loading'
 import DemoCarousel from './Carousel'
 
+
+import { UserContext } from '../store/userContext'
+import { useContext } from 'react'
+
 const Main = () => {
 
+  const userCtx = useContext(UserContext)
   const [movies, setMovies] = useState([])
   const [load, setLoad] = useState(true)
 
@@ -33,6 +38,11 @@ const Main = () => {
     useEffect(() => { 
       getMovies()
     }, [])
+
+    useEffect(() => { 
+     console.log(userCtx.userNotifications)
+     console.log(userCtx.userNotifications.length)
+    }, [userCtx.userNotifications])
 
 
   return (

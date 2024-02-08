@@ -1,5 +1,5 @@
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
+import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button} from "@nextui-org/react";
 import {AcmeLogo} from "../icons/AcmeLogo.jsx";
 import {SearchIcon} from "../icons/SearchIcon.jsx";
 import { useNavigate } from 'react-router-dom'
@@ -8,8 +8,12 @@ import { useContext } from "react";
 import CreateRecomendation from "./CreateRecomendation.jsx";
 import moviesIcon from "../img/moviesIcon.png"
 import CreateNewGroupModal from "./CreateNewGroupModal.jsx";
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import ViewNotifications from "./ViewNotifications";
+import Notifications from "./Notifications.jsx";
 
-const NavBarComponent = () =>  {
+
+const NavBarComponent = ({updateNotifications}) =>  {
 
   const userCtx = useContext(UserContext)
   const navigate = useNavigate()
@@ -19,6 +23,9 @@ const NavBarComponent = () =>  {
     userCtx.updateUserEmail("")
     userCtx.updateUserProfileImage("")
     userCtx.updateUserName("")
+    userCtx.updateUserNotifications([])
+    userCtx.updateUserQuantityNotifications(null)
+    console.log(typeof updateNotifications)
     navigate("/")
   }
 
@@ -29,6 +36,7 @@ const NavBarComponent = () =>  {
   const getMyGroups= () => { 
     navigate(`/myGroups/${userCtx.userId}`)
   }
+  
  
 
 
@@ -49,6 +57,7 @@ const NavBarComponent = () =>  {
       </NavbarContent>
 
       <NavbarContent as="div" className="items-center" justify="end">
+         <Notifications update={updateNotifications}/>
         <Input
             color={"secondary"}
             classNames={{

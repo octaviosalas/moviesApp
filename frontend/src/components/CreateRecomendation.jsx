@@ -225,7 +225,7 @@ const CreateRecomendation = ({type, groupId, updateMovies}) => {
                                    {movie.original_title}
                                  </p>
                                ))}
-                             </div>
+                                </div>
                                 :
                                 null
                                 }

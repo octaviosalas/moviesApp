@@ -8,6 +8,7 @@ import movieRoutes from "./routes/movies.routes.js"
 import genRoutes from "./routes/gens.routes.js"
 import commentsRoutes from "./routes/comments.routes.js"
 import groupRoutes from "./routes/group.routes.js"
+import notificationsRoutes from "./routes/notifications.routes.js"
 
 const app = express()
 const PORT = 4000
@@ -23,6 +24,8 @@ app.use('/movies', movieRoutes);
 app.use("/gens/", genRoutes)
 app.use("/comments/", commentsRoutes)
 app.use("/group", groupRoutes)
+app.use("/notifications", notificationsRoutes)
+
 
 
 

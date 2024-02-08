@@ -17,11 +17,7 @@ export const createGroup = async (req, res) => {
 export const getMyGroups = async (req, res) => { 
   try {
     const { userId } = req.params;
-
-    // Recupera todos los grupos desde la base de datos
     const allGroups = await groups.find();
-
-    // Filtra los grupos donde el usuario es miembro
     const myGroups = allGroups.filter(group => group.members.some(member => member.userId === userId));
 
     res.status(200).json(myGroups);
