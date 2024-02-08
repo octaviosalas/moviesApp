@@ -264,4 +264,3 @@ const RecomendationDetail = () => {
 }
 
 export default RecomendationDetail
-
