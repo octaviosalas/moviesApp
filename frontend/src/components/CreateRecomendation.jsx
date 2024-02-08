@@ -97,6 +97,7 @@ const CreateRecomendation = ({type, groupId, updateMovies}) => {
     }
 
     const createNewRecomendationForMyGroup = () => { 
+      console.log("Ejecutando agregar al GRUPO")
       const recomendationData = ({ 
         title: title, 
         category: category,
@@ -196,9 +197,11 @@ const CreateRecomendation = ({type, groupId, updateMovies}) => {
     return (
   <>
      <div className="flex flex-wrap gap-3">
-       <Button color="secondary" variant="shadow" className="text-white cursor-pointer font-bold" key={size} onPress={() => handleOpen(size)}> Create Recomendation</Button>  
+         <Button color="secondary" variant="shadow" className="text-white cursor-pointer font-bold" key={size} onPress={() => handleOpen(size)}>
+        {type = "general" ?   "Crear Recomendacion" : "Añadir Recomendacion"}
+         </Button>  
      </div>
-          <Modal size={size} isOpen={isOpen} onClose={onClose} className="max-h-[450px] overflow-y-auto xl:h-auto">
+          <Modal size={size} isOpen={isOpen} onClose={onClose} className="max-h-[450px] 2xl:max-h-[655px] overflow-y-auto xl:h-auto">
             <ModalContent>
               {(onClose) => (
                 <>
@@ -210,7 +213,7 @@ const CreateRecomendation = ({type, groupId, updateMovies}) => {
                             <div className="flex flex-col">
                                 <div className="flex md:flex-col items-center gap-2 justify-center">
                                    <div className="flex flex-col items-center justify-center relative mt-2 w-60">
-                              
+                               
                               <Input 
                                 type="text" 
                                 label="Title" 

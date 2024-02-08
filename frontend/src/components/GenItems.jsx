@@ -7,7 +7,7 @@ import CardGen from './CardGen'
 
 
 
-const GenItems = ({}) => {
+const GenItems = () => {
 
   const [gens, setGens] = useState([])
   const [movies, setMovies] = useState([])
@@ -16,8 +16,10 @@ const GenItems = ({}) => {
   const getMovies = () => { 
     axios.get("http://localhost:4000/movies/allMovies")
     .then((res) => { 
+        const data = res.data
+        const generalMoviesWithOutGroup = data.filter((movies) => !movies.groupId)
         console.log(res.data)
-        setMovies(res.data)
+        setMovies(generalMoviesWithOutGroup)
     })
     .catch((err) => { 
         console.log(err)

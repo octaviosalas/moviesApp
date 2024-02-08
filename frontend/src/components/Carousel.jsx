@@ -52,7 +52,7 @@ const DemoCarousel = () => {
                 <p className='font-medium text-black text-sm lg:text-md xl:text-xl'>Recomendaciones mejor puntuadas</p>
             </div>
             <div className='flex items-center justify-center mt-2'>
-                <Carousel showArrows={true} onChange={onChange} showThumbs={false} onClickThumb={onClickThumb}>
+                <Carousel showArrows={true} onChange={onChange} showThumbs={false} onClickThumb={onClickThumb} key="i">
                     {bestMovies.map((best) => ( 
                          <div className='h-[250px] lg:h-[350px] xl:h-[400px] 2xl:h-[520px] w-auto bg-violet-200 cursor-pointer' onClick={() => viewMovieDetail(best.recomendationId)}>
                             <img src={best.image} className=' w-full h-full'/>              

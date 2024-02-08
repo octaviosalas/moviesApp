@@ -4,20 +4,48 @@ import { useContext } from "react";
 import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button} from "@nextui-org/react";
 import axios from 'axios';
 
-const Notifications = ({update}) => {
+const Notifications = () => {
 
   const userCtx = useContext(UserContext)
+
+  const getNotifications = () => {
+    axios.get(`http://localhost:4000/notifications/${userCtx.userId}`)
+      .then((res) => {
+        console.log("Notificaciones", res.data);
+        console.log("Cantidad", res.data.length);
+        userCtx.updateUserNotifications(res.data);
+        userCtx.updateUserQuantityNotifications(res.data.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   
   const updateNotificationsState = (notificationId) => { 
     axios.put(`http://localhost:4000/notifications/${notificationId}`)
          .then((res) => { 
             console.log(res.data)
-            console.log(typeof update)
-            console.log(update)
+            getNotifications()
          })
          .catch((err) => { 
             console.log(err)
          })
+  }
+
+  const JoinToTheGroup = (groupId, notificationId) => { 
+    const myDataToBeMemberOfTheGroup = ({
+       userName: userCtx.userName,
+       userId: userCtx.userId,
+       userEmail: userCtx.userEmail,
+       userProfileImage: userCtx.userProfileImage,
+       userRolGroup: "Miembro"
+      })
+      axios.post(`http://localhost:4000/group/addNewMember/${groupId}`, myDataToBeMemberOfTheGroup)
+           .then((res) => { 
+            console.log(res.data)
+            updateNotificationsState(notificationId)
+           })
+           .catch((err) => console.log(err))
   }
 
   return (
@@ -32,7 +60,7 @@ const Notifications = ({update}) => {
             </div>          
             </DropdownTrigger>
              <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="profile" className="">           
+                <DropdownItem key={userCtx.userId} className="">           
                 {
                         Array.isArray(userCtx.userNotifications) && userCtx.userNotifications.length !== 0 ? 
                         userCtx.userNotifications.map((not) => ( 
@@ -49,7 +77,7 @@ const Notifications = ({update}) => {
                                 </div>
                                 </div>
                                 <div className="mt-2 flex items-center gap-2">
-                                    <Button className="font-medium text-xs h-6" color="secondary" size="xxs" onClick={() => updateNotificationsState(not._id)}>Aceptar</Button>
+                                    <Button className="font-medium text-xs h-6" color="secondary" size="xxs" onClick={() => JoinToTheGroup(not.groupId, not._id)}>Aceptar</Button>
                                     <Button className="font-medium text-xs h-6" style={{backgroundColor:"#ECA3F0"}} size="xxs">Rechazar</Button>
                                 </div>
                                 </div> 
@@ -59,7 +87,7 @@ const Notifications = ({update}) => {
                         </div>
                     )) 
                         : 
-                    <p>No tenes notificaciones</p>
+                       <p>No tenes notificaciones</p>
                     }
                         
                 </DropdownItem>         

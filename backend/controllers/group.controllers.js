@@ -26,3 +26,41 @@ export const getMyGroups = async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
+
+export const addNewMember = async (req, res) => { 
+  const {groupId} = req.params
+  const newMemberData = req.body;
+
+  console.log("Recibi como ID del grupo: ", groupId)
+  console.log("Recibi como nuevo miembro: ", newMemberData)
+
+  try {
+    const group = await groups.findById({_id: groupId});
+    if (!group) {
+      return res.status(404).json({ message: 'Grupo no encontrado' });
+    }
+    group.members.push(newMemberData);
+    const updatedGroup = await group.save();
+    res.status(200).json(updatedGroup);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}
+
+export const groupData = async (req, res) => { 
+  const {groupId} = req.params
+
+
+  try {
+    const group = await groups.findById({_id: groupId});
+    if (!group) {
+      return res.status(404).json({ message: 'Grupo no encontrado' });
+    }
+     await group
+     res.status(200).json(group);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+}

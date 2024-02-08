@@ -111,3 +111,22 @@ export const removeLike = async (req, res) => {
     }
   };
 
+  export const getGroupPublications = async (req, res) => {
+     const { groupId } = req.params;
+     console.log(groupId)
+    try {
+      const groupRecomendations = await Recomendations.find({groupId: groupId});
+  
+      if (groupRecomendations) {
+        res.status(200).json({ message: 'Recomendaciones del grupo', groupRecomendations});
+      } else {
+        res.status(404).json({ message: 'Grupo no encontrado' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al eliminar la recomendacion' });
+    }
+  };
+
+
+  

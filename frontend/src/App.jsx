@@ -11,6 +11,7 @@ import RecomendationDetail from './components/RecomendationDetail'
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import MyRecomendations from './components/MyRecomendations'
 import MyGroups from './components/MyGroups'
+import GroupPage from './components/GroupPage'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/movie/:recomendationId" element={<RecomendationDetail/>}   />
                 <Route path="/myMovies/:userId" element={<MyRecomendations/>}/>
                 <Route path="/myGroups/:userId" element={<MyGroups/>}/>
+                <Route path="/group/:groupId" element={<GroupPage/>}/>
               </Routes>
         </UserProvider>
       </> 

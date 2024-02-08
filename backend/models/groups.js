@@ -9,6 +9,9 @@ const groupsSchema = mongoose.Schema({
     creatorId: { 
       type: String
     },
+    creatorName: { 
+      type: String
+    },
     members: [
         {
           userName: {
