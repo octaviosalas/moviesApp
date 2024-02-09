@@ -6,9 +6,10 @@ import { UserContext } from "../store/userContext";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CreateRecomendation from "./CreateRecomendation";
+import AssignAsAdministrator from "./AssignAsAdministrator";
 
 
-const MyGroupsCard = ({groups}) => {
+const MyGroupsCard = ({groups, updateData}) => {
 
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["0"]));
     const navigate = useNavigate()
@@ -67,13 +68,25 @@ const MyGroupsCard = ({groups}) => {
                                     ) : (
                                     <div>
                                         <p className="text-sm text-zinc-500">Debes ser administrador del grupo para poder invitar a integrantes</p>
-                                        <InviteToGroup type={"member"} groupData={g} />
+                                          <InviteToGroup type={"member"} groupData={g} />
                                     </div>
                                     )}
-                            </AccordionItem>  
-                              {g.members.some((mem) => mem.userId === userCtx.userId && mem.userRolGroup === "Admin") ? (
-                                    <AccordionItem  key={`${g.groupName}-InvitacionesPendientes`} aria-label={`${g._id}-InvitacionesPendientes`} title="Invitaciones Pendientes">
-                                       <p>aa</p>
+                                  </AccordionItem>  
+                                        {g.members.some((mem) => mem.userId === userCtx.userId && mem.userRolGroup === "Admin") ? (
+                                                <AccordionItem  key={`${g.groupName}-InvitacionesPendientes`} aria-label={`${g._id}-InvitacionesPendientes`} title="Asignar nuevo Administrador">
+                                                {g.members.filter((mem) => mem.userId !== userCtx.userId && mem.userRolGroup !== "Admin").map((mem) => ( 
+                                                    <div className="flex flex-col mt-4 ">
+                                                        <div className=" flex justify-between items-center">
+                                                            <div className="flex items-center text-center justify-start gap-2">
+                                                                <img className="rounded-full h-8 w-8" src={mem.userProfileImage}/>
+                                                                <p>{mem.userName}</p>
+                                                            </div>
+                                                            <div className="flex justify-end items-center">
+                                                                <p className="text-sm font-medium text-zinc-500"><AssignAsAdministrator updateGroupData={updateData} userId={mem.userId} groupData={g} userName={mem.userName}/></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                        ))}
                                     </AccordionItem>
                                 ) : (  null
                                 )}

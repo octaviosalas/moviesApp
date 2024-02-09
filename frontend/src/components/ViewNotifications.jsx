@@ -6,10 +6,10 @@ const ViewNotifications = ({text}) => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   const handleOpen = (event) => {
-    event.stopPropagation(); // Stop event propagation
+    event.stopPropagation(); 
     onOpen();
   };
-  
+
   return (
     <>
       <small onClick={handleOpen}>Open Modal</small>

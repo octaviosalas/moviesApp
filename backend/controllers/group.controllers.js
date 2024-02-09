@@ -64,3 +64,34 @@ export const groupData = async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 }
+
+
+export const updateMemberRol = async (req, res) => {
+  const { userId, groupId } = req.params;
+
+  console.log("Recibí como ID del grupo: ", groupId);
+  console.log("Recibí como miembro: ", userId);
+
+  try {
+    const group = await groups.findById({_id: groupId});
+
+    if (!group) {
+      return res.status(404).json({ message: 'Grupo no encontrado' });
+    }
+
+    const memberIndex = group.members.findIndex(member => member.userId === userId);
+
+    if (memberIndex === -1) {
+      return res.status(404).json({ message: 'Usuario no encontrado en el grupo' });
+    }
+
+    group.members[memberIndex].userRolGroup = 'Admin';
+    const updatedGroup = await group.save();
+
+    res.status(200).json(updatedGroup); 
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};

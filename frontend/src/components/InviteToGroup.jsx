@@ -87,6 +87,33 @@ const InviteToGroup = ({type, groupData}) => {
     });
   };
 
+  const requestPermissionToBeAdminOfTheGroup = async () => { 
+    const notificationsData = {
+      notificationType: "AdminPermission",
+      senderName: userCtx.userName,
+      senderId: userCtx.userId,
+      senderProfileImage: userCtx.userProfileImage,
+      groupId: groupData._id,
+      groupName: groupData.groupName,
+      groupMembers: groupData.members,
+      addresseeId: groupData.creatorId,
+      addresseeName:  groupData.creatorName
+    };
+    console.log(notificationsData)
+    try {
+      await axios.post(`http://localhost:4000/notifications/invitation`, {notificationsData});
+      console.log(`Solicitud enviada a ${ groupData.creatorId, groupData.creatorName}`);
+      setSuccesNotification(true)
+      setTimeout(() => { 
+        onClose()
+        setSuccesNotification(false)
+        setUserSelected([])
+        setFilteredNames([])
+      }, 2000)
+    } catch (error) {
+      console.error(`Error al enviar invitación a ${ groupData.creatorName}:`, error);
+    }
+  }
 
   return (
     <>
@@ -99,8 +126,11 @@ const InviteToGroup = ({type, groupData}) => {
         <ModalContent>
           {(onClose) => (
             <>
-             {type = "admin" ? <ModalHeader className="flex flex-col gap-1 text-sm">Inivtar nuevo Integrante a "{groupData.groupName}"</ModalHeader> : null}
-            {succesNotification !== true ?
+             {type === "admin" ? <ModalHeader className="flex flex-col gap-1 text-sm">Inivtar nuevo Integrante a "{groupData.groupName}"</ModalHeader> 
+              :
+              <ModalHeader className="flex flex-col gap-1 text-sm">Solicitar permiso para ser Administrador de "{groupData.groupName}"</ModalHeader>
+              }
+            {succesNotification !== true && type === "admin" ? ( 
               <ModalBody>
                  <Input type="text" label="Nombre del Usuario" variant="bordered" onChange={(e) => handleChange(e.target.value)}/>
                   <div className="absolute">
@@ -130,18 +160,36 @@ const InviteToGroup = ({type, groupData}) => {
                       null
                     }
                   
-              </ModalBody> : 
+              </ModalBody> ) : succesNotification !== true && type === "member" ? ( 
+                <div className="flex items-center justify-center mt-6">
+                     <p className="font-medium text-md text-violet-700">¿Estas seguro de enviar la solicitud?</p>
+                </div>
+              ) : 
                 <ModalBody className="flex items-center justify-center">
-                  <p className="font-medium text-md text-violet-700">Invitacion Enviada</p>
+                    {type === "Admin" ? 
+                        <p className="font-medium text-md text-violet-700"> 
+                        Invitacion Enviada
+                        </p> 
+                        : 
+                        <p className="font-medium text-md text-violet-700">
+                          Solicitud Enviada
+                        </p>
+                    }
                 </ModalBody>
               }
               <ModalFooter className="mt-8">
                 <Button style={{backgroundColor:"#D899D8"}} className="font-medium text-white text-sm" variant="light" onPress={onClose}>
                   Cancelar
                 </Button>
+               {type === "admin" ?
                 <Button color="secondary" className="font-bold text-white text-sm" onClick={() => sendInvite()}>
                   Enviar Invitacion
-                </Button>
+                </Button> 
+                :
+                <Button color="secondary" className="font-bold text-white text-sm" onClick={() => requestPermissionToBeAdminOfTheGroup()}>
+                  Solicitar Permiso
+                 </Button>
+                }
               </ModalFooter>
             </>
           )}

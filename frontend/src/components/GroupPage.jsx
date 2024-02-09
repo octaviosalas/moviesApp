@@ -6,12 +6,17 @@ import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import NavBarComponent from './Navbar'
 import { Avatar } from '@nextui-org/react'
+import Search from './Search'
+import CardMovie from './CardMovie'
+import Loading from "./Loading"
 
 const GroupPage = () => {
 
     const {groupId} = useParams()
     const [groupRecomendations, setGroupRecomendations] = useState([])
     const [groupData, setGroupData] = useState({})
+    const [load, setLoad] = useState(true)
+
  
     const getGroupPublications = () => { 
         console.log("mandee ", groupId)
@@ -19,6 +24,9 @@ const GroupPage = () => {
              .then((res) => { 
                 console.log(res.data)
                 setGroupRecomendations(res.data.groupRecomendations)
+                setTimeout(() => { 
+                    setLoad(false)
+                }, 2500)
              })
              .catch((err) => { 
                 console.log(err)
@@ -41,24 +49,42 @@ const GroupPage = () => {
         getGroupData()
     }, [])
 
-    useEffect(() => { 
-        console.log(groupRecomendations)
-    }, [groupRecomendations])
+    const handleChange = (e) => { 
+        const searchTerm = e.toLowerCase(); 
+        const filteringFilteredData = groupRecomendations.filter((mov) => mov.title.toLowerCase().includes(searchTerm));
+        if(e.length !== 0) { 
+            setGroupRecomendations(filteringFilteredData)
+        } else { 
+            getGroupPublications()
+        }   
+        
+      }
 
   return (
     <div className='max-h-screen'>
         <NavBarComponent/>
-        <div className='mt-24 flex flex-col items-center justify-center'>
-            <Avatar src={groupData.groupPhoto}/>
-            <p>Grupo: {groupData.groupName}</p>
-            <p>Creador: {groupData.creatorName}</p>
-            <p>Fecha de Creacion: {groupData.creationName}</p>
-            <p>Cantidad de Recomendaciones realizadas: {groupRecomendations.length}</p>
-        </div>
-        <div className='flex items-center justify-center'>
-          {groupRecomendations.length}
-        </div>
-  
+
+       {
+       load ? <Loading/> : 
+        <>
+            <div className='mt-2 flex flex-col items-center justify-center'>
+                <p className='font-bold text-violet-700 text-lg'>{groupData.groupName}</p>
+                <p className='font-meidum text-sm text-zinc-400'>Creador por: {groupData.creatorName}</p>
+                <Avatar src={groupData.groupPhoto} className='rounded-full w-24 h-24 mt-2'/>
+                <p className='font-meidum text-sm text-zinc-400'>Creado el: {groupData.creationDate}</p>
+            </div>
+            <div className='flex flex-col items-center justify-center mt-4'>
+                <div>
+                    <Search inputValue={handleChange}/>
+                </div>
+                <div className='mt-6'>
+                    <CardMovie moviesData={groupRecomendations}/>
+                </div>
+            </div>
+            </>
+        }
+           
+    
     </div>
   )
 }

@@ -71,6 +71,7 @@ const FilteredMoviesByCategory = () => {
       </div>
        ) : (
       <div className='mt-24 lg:mt-20'>
+        <p className='mb-6 text-violet-700 text-lg font-medium'>{category}</p>
         <div className='flex items-center justify-center'>
           <Search inputValue={handleChange}/>
         </div>

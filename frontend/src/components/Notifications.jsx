@@ -64,10 +64,10 @@ const Notifications = () => {
                 {
                         Array.isArray(userCtx.userNotifications) && userCtx.userNotifications.length !== 0 ? 
                         userCtx.userNotifications.map((not) => ( 
-                        <div className="flex flex-col mt-2">
-                            {not.notificationType === "Invitation" && not.read === false ? 
-                            <div className="flex flex-col items-center"> 
-                                <div className="flex gap-2 mt-2  hover:bg-violet-200"> 
+                        <div className="flex flex-col mt-2 justify-start items-start">
+                            {not.notificationType === "Invitation" && not.read === false ? ( 
+                                <div className="flex flex-col items-start justify-start"> 
+                                <div className="flex gap-2 mt-2  "> 
                                 <div className="flex gap-2 items-center">
                                     <img src={not.senderProfileImage} className="rounded-full h-6 w-6"/>                      
                                 </div>
@@ -76,13 +76,31 @@ const Notifications = () => {
                                     <p className="text-xs">Te ha invitado a unirte al grupo "<b className="text-zinc-500">{not.groupName}</b>"</p>
                                 </div>
                                 </div>
-                                <div className="mt-2 flex items-center gap-2">
+                                <div className="mt-3 flex items-start justify-start gap-2">
                                     <Button className="font-medium text-xs h-6" color="secondary" size="xxs" onClick={() => JoinToTheGroup(not.groupId, not._id)}>Aceptar</Button>
                                     <Button className="font-medium text-xs h-6" style={{backgroundColor:"#ECA3F0"}} size="xxs">Rechazar</Button>
                                 </div>
                                 </div> 
-                            :
-                            null
+                             ) : not.notificationType === "AdminPermission" && not.read === false ? (
+                              <div className="flex flex-col items-start justify-start">  
+                                  <div className="flex gap-2 mt-2  "> 
+                                      <div className="flex gap-2 items-center">
+                                          <img src={not.senderProfileImage} className="rounded-full h-6 w-6"/>                      
+                                      </div>
+                                      <div>
+                                          <small className="text-xs font-medium">{not.senderName}</small>
+                                          <p className="text-xs">Ha solicitado ser Administrador del grupo "<b className="text-zinc-500">{not.groupName}</b>"</p>
+                                      </div>
+                                  </div>
+                                      <div className="mt-3 flex items-center gap-2">
+                                          <Button className="font-medium text-xs h-6" color="secondary" size="xxs" onClick={() => JoinToTheGroup(not.groupId, not._id)}>Aceptar </Button>
+                                          <Button className="font-medium text-xs h-6" style={{backgroundColor:"#ECA3F0"}} size="xxs">Rechazar </Button>
+                                      </div>
+                                </div> 
+                             )
+                             :
+                             null
+                           
                             }
                         </div>
                     )) 

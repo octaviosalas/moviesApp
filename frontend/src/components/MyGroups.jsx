@@ -33,7 +33,7 @@ const MyGroups = () => {
   return (
     <div>
        <NavBarComponent/>
-       <MyGroupsCard groups={myGroups}/>
+       <MyGroupsCard groups={myGroups} updateData={getMyGroups}/>
     </div>
   )
 }

@@ -65,7 +65,7 @@ const CardMovie = ({ moviesData }) => {
                         </div>
                     </div>
                         <Link to={`/movie/${mov._id}`}>
-                            <Button radius="full" className="font-bold text-black" size="sm" onClick={() => goTo(`${mov.category}`)}> Ver </Button>
+                            <Button radius="full" className="font-bold text-black" size="sm"> Ver </Button>
                         </Link>                    
                 </CardFooter>
             </Card>
