@@ -33,7 +33,13 @@ const MyGroups = () => {
   return (
     <div>
        <NavBarComponent/>
-       <MyGroupsCard groups={myGroups} updateData={getMyGroups}/>
+       {
+          myGroups.length === 0 
+          ?
+          <p className='font-medium text-violet-700 text-lg'>No tienes Grupos</p> 
+          : 
+          <MyGroupsCard groups={myGroups} updateData={getMyGroups}/>
+        }
     </div>
   )
 }

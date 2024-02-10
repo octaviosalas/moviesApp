@@ -15,8 +15,7 @@ const InviteToGroup = ({type, groupData}) => {
   const [userSelected, setUserSelected] = useState([])
   const [inputValue, setInputValue] = useState("")
   const [succesNotification, setSuccesNotification] = useState(false)
-
-
+  const [userIsOnTheGroup, setUserIsOnTheGroup] = useState(false)
 
 
   const getAllUsers = async () => {
@@ -31,7 +30,7 @@ const InviteToGroup = ({type, groupData}) => {
 
   useEffect(() => { 
     getAllUsers()
-    console.log(groupData)
+    console.log("Datos del grupo abierto:", groupData)
   }, [groupData])
 
   const handleChange = (e) => { 
@@ -47,9 +46,18 @@ const InviteToGroup = ({type, groupData}) => {
   }
 
   const chooseTheUser = (name) => { 
-    setUserSelected([...userSelected, { name }]);
-    setFilteredNames("")
-    setInputValue("")
+    if(!groupData.members.some((member) => member.userName.toLowerCase() === name.name.toLowerCase())) {
+      setUserSelected([...userSelected, { name }]);
+      setFilteredNames("")
+      setInputValue("")       
+    } else { 
+      setUserIsOnTheGroup(true)
+      setFilteredNames("")
+      setTimeout(() => { 
+        setUserIsOnTheGroup(false)
+      }, 1500)
+    }
+
   }
 
   useEffect(() => { 
@@ -58,6 +66,7 @@ const InviteToGroup = ({type, groupData}) => {
 
 
   const sendInvite = () => {
+    
     userSelected.forEach(async (user) => {
       const notificationsData = {
         notificationType: "Invitation",
@@ -146,6 +155,13 @@ const InviteToGroup = ({type, groupData}) => {
                             null
                         }
                   </div>
+
+                  {userIsOnTheGroup ?
+                    <div className="flex items-center jsutify-center">
+                      <p className="font-medium mt-6 text-sm text-violet-700">Estas intentando agregar a un miembro de este grupo</p>
+                    </div> 
+                    : 
+                  null}
                  
                   {userSelected.length !== 0 ? 
                       userSelected.map((us, index) => ( 

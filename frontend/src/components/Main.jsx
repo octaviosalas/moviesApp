@@ -47,7 +47,7 @@ const Main = () => {
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      <NavBarComponent moviesName={movies}/>
+      <NavBarComponent/>
 
         {load ? 
           <Loading text={"Cargando Datos"}/>

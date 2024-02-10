@@ -15,7 +15,7 @@ const DemoCarousel = () => {
              .then((res) => { 
                 console.log(res.data)
                 const data = res.data
-                const getBestScore = data.sort((a, b) => b.score - a.score).slice(0, 6)
+                const getBestScore = data.sort((a, b) => b.likes.length - a.likes.length).slice(0, 6)
                 const getIdAndImage = getBestScore.map((data) => { 
                     return { 
                         image: data.movieImage,
@@ -49,7 +49,7 @@ const DemoCarousel = () => {
     return (
         <>
             <div className='flex justify-start'>
-                <p className='font-medium text-black text-sm lg:text-md xl:text-xl'>Recomendaciones mejor puntuadas</p>
+                <p className='font-medium text-black text-sm lg:text-md xl:text-xl'>Recomendaciones con mas Likes</p>
             </div>
             <div className='flex items-center justify-center mt-2'>
                 <Carousel showArrows={true} onChange={onChange} showThumbs={false} onClickThumb={onClickThumb} key="i">

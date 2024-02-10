@@ -13,8 +13,9 @@ const Notifications = () => {
       .then((res) => {
         console.log("Notificaciones", res.data);
         console.log("Cantidad", res.data.length);
+        const unReadNotifications = res.data.filter((not) => not.read === false)
         userCtx.updateUserNotifications(res.data);
-        userCtx.updateUserQuantityNotifications(res.data.length);
+        userCtx.updateUserQuantityNotifications(unReadNotifications.length);
       })
       .catch((err) => {
         console.log(err);
@@ -22,6 +23,8 @@ const Notifications = () => {
   };
   
   const updateNotificationsState = (notificationId) => { 
+    console.log("acep´tando")
+
     axios.put(`http://localhost:4000/notifications/${notificationId}`)
          .then((res) => { 
             console.log(res.data)
@@ -33,6 +36,7 @@ const Notifications = () => {
   }
 
   const JoinToTheGroup = (groupId, notificationId) => { 
+    console.log("entrasndo al grupo")
     const myDataToBeMemberOfTheGroup = ({
        userName: userCtx.userName,
        userId: userCtx.userId,
@@ -48,6 +52,18 @@ const Notifications = () => {
            .catch((err) => console.log(err))
   }
 
+  const rejectInvitationToTheGroup = (notificationId) => { 
+    console.log("rechazando")
+   axios.put(`http://localhost:4000/notifications/reject/${notificationId}`)
+         .then((res) => { 
+            console.log(res.data)
+            getNotifications()
+          })
+         .catch((err) => { 
+            console.log(err)
+          })
+  }
+
   return (
     <div className='flex gap-2'>
          <Dropdown>
@@ -61,7 +77,7 @@ const Notifications = () => {
             </DropdownTrigger>
              <DropdownMenu aria-label="Static Actions">
                 <DropdownItem key={userCtx.userId} className="">           
-                {
+                    {
                         Array.isArray(userCtx.userNotifications) && userCtx.userNotifications.length !== 0 ? 
                         userCtx.userNotifications.map((not) => ( 
                         <div className="flex flex-col mt-2 justify-start items-start">
@@ -78,7 +94,7 @@ const Notifications = () => {
                                 </div>
                                 <div className="mt-3 flex items-start justify-start gap-2">
                                     <Button className="font-medium text-xs h-6" color="secondary" size="xxs" onClick={() => JoinToTheGroup(not.groupId, not._id)}>Aceptar</Button>
-                                    <Button className="font-medium text-xs h-6" style={{backgroundColor:"#ECA3F0"}} size="xxs">Rechazar</Button>
+                                    <Button className="font-medium text-xs h-6" style={{backgroundColor:"#ECA3F0"}} size="xxs" onClick={() => rejectInvitationToTheGroup(not._id)}>Rechazar</Button>
                                 </div>
                                 </div> 
                              ) : not.notificationType === "AdminPermission" && not.read === false ? (
@@ -94,7 +110,7 @@ const Notifications = () => {
                                   </div>
                                       <div className="mt-3 flex items-center gap-2">
                                           <Button className="font-medium text-xs h-6" color="secondary" size="xxs" onClick={() => JoinToTheGroup(not.groupId, not._id)}>Aceptar </Button>
-                                          <Button className="font-medium text-xs h-6" style={{backgroundColor:"#ECA3F0"}} size="xxs">Rechazar </Button>
+                                          <Button className="font-medium text-xs h-6" style={{backgroundColor:"#ECA3F0"}} size="xxs"  onClick={() => rejectInvitationToTheGroup(not._id)}>Rechazar </Button>
                                       </div>
                                 </div> 
                              )

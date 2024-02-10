@@ -12,17 +12,28 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import ViewNotifications from "./ViewNotifications";
 import Notifications from "./Notifications.jsx";
 import { useState } from "react";
+import axios from "axios";
 
-
-const NavBarComponent = ({moviesName}) =>  {
+const NavBarComponent = () =>  {
 
   const userCtx = useContext(UserContext)
   const navigate = useNavigate()
   const [filteredNames, setFilteredNames] = useState([])
   const [searchValue, setSearchValue] = useState("")
   const [movieSelected, setMovieSelected] = useState({ movieName: "", movieId: "" });
+ const [moviesAvailable, setMoviesAvailable] = useState([])
 
-
+  const getMovies = () => { 
+    axios.get("http://localhost:4000/movies/allMovies")
+    .then((res) => { 
+        console.log(res.data)
+        setMoviesAvailable(res.data)
+        
+    })
+    .catch((err) => { 
+        console.log(err)
+    })
+ }
 
   const logOutSession = () => { 
     userCtx.updateUser("")
@@ -48,9 +59,7 @@ const NavBarComponent = ({moviesName}) =>  {
       setFilteredNames([])
       setMovieSelected({ movieName: "", movieId: "" });
     } else { 
-      console.log(e)
-      console.log(moviesName)
-      const useInputToFindTheMovie = moviesName.filter((mov) => mov.title.toLowerCase().includes(e))
+      const useInputToFindTheMovie = moviesAvailable.filter((mov) => mov.title.toLowerCase().includes(e))
       setFilteredNames(useInputToFindTheMovie)
     }
   }
@@ -59,13 +68,14 @@ const NavBarComponent = ({moviesName}) =>  {
        setMovieSelected({ movieName: movieName, movieId: recomendationId })
        setTimeout(() => { 
         navigate(`/movie/${recomendationId}`)
+        setFilteredNames([])
        }, 200)
   }
 
-  useEffect(() => { 
-     console.log(movieSelected)
-  }, [movieSelected])
 
+  useEffect(() => { 
+    getMovies()
+  }, [userCtx.userId])
 
   
   return (
@@ -103,9 +113,9 @@ const NavBarComponent = ({moviesName}) =>  {
             />
             <div className="absolute">
                 {filteredNames !== "" ? 
-                    <div className='options-container absolute bg-white  shadow-xl rounded-lg mt-1 w-32 lg:w-56 items-center justify-center overflow-y-auto max-h-[300px]' >
+                    <div className=' absolute bg-white  shadow-xl rounded-lg mt-1 w-32 lg:w-56 items-start justify-start overflow-y-auto max-h-[300px]' >
                         {filteredNames.map((mov) => (
-                          <p className="text-black text-md font-medium mt-1" key={mov._id} onClick={() => chooseTheMovie(mov._id, mov.title)}>
+                          <p className="text-black text-md font-medium mt-1 cursor-pointer hover:text-zinc-500" key={mov._id} onClick={() => chooseTheMovie(mov._id, mov.title)}>
                             {mov.title}
                           </p>
                         ))}
@@ -141,9 +151,11 @@ const NavBarComponent = ({moviesName}) =>  {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">{userCtx.userEmail}</p>
             </DropdownItem>
+            <DropdownItem key="analytics" onClick={() => navigate("/main")}>Inicio</DropdownItem>     
             <DropdownItem key="settings" onClick={() => getMyMovies()}>Mis Publicaciones</DropdownItem>
             <DropdownItem key="team_settings" onClick={() => getMyGroups()}>Mis Grupos</DropdownItem>
             <DropdownItem key="analytics" onClick={() => logOutSession()}>Cerrar Sesion</DropdownItem>         
+
           </DropdownMenu>
         </Dropdown>
       </NavbarContent>

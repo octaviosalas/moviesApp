@@ -58,7 +58,7 @@ const CreateNewGroupModal = () => {
       groupPhoto: groupPhoto,
       creationDate: date,
       creatorId: userCtx.userId,
-      creatorName: userCtx.creatorName,
+      creatorName: userCtx.userName,
       members: [
         {
           userName: userCtx.userName,

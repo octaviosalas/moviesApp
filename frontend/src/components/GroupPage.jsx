@@ -61,25 +61,40 @@ const GroupPage = () => {
       }
 
   return (
-    <div className='max-h-screen'>
+    <div className='mt-auto'>
         <NavBarComponent/>
 
        {
        load ? <Loading/> : 
         <>
-            <div className='mt-2 flex flex-col items-center justify-center'>
+            <div className='mt-24 2xl:mt-12 min-h-screen flex flex-col items-center justify-center'>
                 <p className='font-bold text-violet-700 text-lg'>{groupData.groupName}</p>
                 <p className='font-meidum text-sm text-zinc-400'>Creador por: {groupData.creatorName}</p>
-                <Avatar src={groupData.groupPhoto} className='rounded-full w-24 h-24 mt-2'/>
+                <div 
+                 className='rounded-lg w-96 h-56 mt-2' 
+                 style={{
+                        backgroundImage: `url(${groupData.groupPhoto})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",  // Centra la imagen de fondo
+                        }}/>
                 <p className='font-meidum text-sm text-zinc-400'>Creado el: {groupData.creationDate}</p>
+                <div className='flex flex-col items-center justify-center'>
+                    <div className='mt-6'>
+                      <Search inputValue={handleChange}/>
+                    </div>
+                    <div className='mt-6'>
+                      <CardMovie moviesData={groupRecomendations}/>
+                    </div>
+                </div>
+             
+               
+                
             </div>
-            <div className='flex flex-col items-center justify-center mt-4'>
+            <div className='flex flex-col items-center justify-center'>
                 <div>
-                    <Search inputValue={handleChange}/>
+                  
                 </div>
-                <div className='mt-6'>
-                    <CardMovie moviesData={groupRecomendations}/>
-                </div>
+              
             </div>
             </>
         }

@@ -9,6 +9,7 @@ import Loading from './Loading'
 import { Avatar } from '@nextui-org/react'
 import { useContext } from 'react'
 import { UserContext } from '../store/userContext'
+import CreateRecomendation from './CreateRecomendation'
 
 const MyRecomendations = () => {
 
@@ -54,23 +55,31 @@ const MyRecomendations = () => {
     <div>
         <NavBarComponent/>
 
-       {load ? 
-        <Loading/>
-       :
-       <div className='h-screen flex flex-col justify-center items-center'>
-          <div className='flex flex-col items-center justify-center'>
-             <Avatar src={userCtx.userProfileImage} className="w-20 h-20 text-large" />
-             <p className='font-medium text-black text-sm xl:text-md mt-3'>{userCtx.userName}</p>
-          </div>
+        {load ? (
+            <Loading />
+        ) : myPublications.length === 0 ? (
+            <div className='flez flex-col items-center justify-center'>
+              <p>No tenes publicaciones</p>
+              <div className='mt-6'>
+                <CreateRecomendation/>
+              </div>
+            </div>
+
+        ) : (
+            <div className='h-screen mt-96 lg:mt-44 xl:mt-36 2xl:mt-12 flex flex-col justify-center items-center '>
+            <div className='flex flex-col items-center justify-center '>
+                <Avatar src={userCtx.userProfileImage} className="w-20 h-20 text-large" />
+                <p className='font-medium text-black text-sm xl:text-md mt-3'>{userCtx.userName}</p>
+            </div>
             <div className='mt-6'>
-                <Search inputValue={handleChange}/>
+                <Search inputValue={handleChange} />
             </div>
             <div className='mt-10'>
-               <MyMoviesCard updateMovies={getMyMovies} moviesData={myPublications}/>
+                <MyMoviesCard updateMovies={getMyMovies} moviesData={myPublications} />
             </div>
-        </div>}
-
-    </div>
+            </div>
+        )}
+        </div>
   )
 }
 
