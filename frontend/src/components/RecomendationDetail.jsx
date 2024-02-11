@@ -153,12 +153,12 @@ const RecomendationDetail = () => {
   return (
     <div>
           <NavBarComponent/>
-          <div className='flex flex-col  xl:flex-row mt-16 md:mt-24 lg:mt-24 xl:mt-16 2xl:mt-12 items-center gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
+          <div className='flex flex-col  xl:flex-row mt-16 md:mt-24 lg:mt-24 xl:mt-16 2xl:mt-12  gap-12  md:gap-20  lg:gap-24 xl:gap-28 '>
             
            {load ?
             <Loading/>
                :<>
-               <div className='flex flex-col'>
+               <div className='flex flex-col '>
               <CardMovieIndividual moviesData={recomendationGralData}/>
                 <div className='flex items-center justify-center mt-3 cursor-pointer' title="Me Gusta">
                  {
@@ -248,12 +248,6 @@ const RecomendationDetail = () => {
                    <Button color="secondary" variant="shadow" onClick={() => createNewComment()}> Enviar Comentario </Button>  
                  </div>
                </div>
-
-
-            {/* <div>
-                <input type='text' className='text-md w-72 h-10 border' onChange={(e) => setComment(e.target.value)}/>
-                <button onClick={() => createNewComment()}>Enviar</button>
-                    </div> */}
 
             </div>
             </>

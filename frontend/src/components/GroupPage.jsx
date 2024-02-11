@@ -79,12 +79,18 @@ const GroupPage = () => {
                         }}/>
                 <p className='font-meidum text-sm text-zinc-400'>Creado el: {groupData.creationDate}</p>
                 <div className='flex flex-col items-center justify-center'>
-                    <div className='mt-6'>
-                      <Search inputValue={handleChange}/>
-                    </div>
-                    <div className='mt-6'>
-                      <CardMovie moviesData={groupRecomendations}/>
-                    </div>
+                   {groupRecomendations.length !== 0 ?
+                   <>
+                        <div className='mt-6'>
+                        <Search inputValue={handleChange}/>
+                        </div>
+                        <div className='mt-6'>
+                        <CardMovie moviesData={groupRecomendations}/>
+                        </div>
+                   </>
+                   :
+                   <p className='mt-6 font-medium text-violet-700'>Por el momento no hay peliculas publicadas</p>  
+                  }
                 </div>
              
                

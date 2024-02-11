@@ -19,6 +19,11 @@ const LikesModal = ({quantity, data}) =>  {
             <>
               <ModalHeader className="flex flex-col gap-1 text-md">Me gustas en la Recomendacion</ModalHeader>
               <ModalBody>
+                {quantity === 0 ? 
+                  <div className="flex items-center justify-center">
+                    <p className="font-medium text-xs lg:text-sm text-violet-700">La publicacion aun no recibio Likes</p>
+                  </div>
+                :
                 <div className="mb-6 flex flex-col">
                     {data.map((d) => ( 
                         d.likes.map((like) => ( 
@@ -34,7 +39,7 @@ const LikesModal = ({quantity, data}) =>  {
                             </div>
                         ))
                     ))}
-                </div>
+                </div>}
               </ModalBody>
               
             </>
