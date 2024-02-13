@@ -17,7 +17,8 @@ Objetivo:
 El objetivo principal facilitar la toma de decisiones al seleccionar una película para ver, convirtiendo este proceso en una experiencia compartida y enriquecedora.
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Description:
 Application dedicated to movie lovers, designed with the intention of making the experience of choosing the next movie easier and more fun. The application offers a
 interactive platform where users can post and get movie recommendations in a collaborative and social way.
