@@ -6,11 +6,15 @@ Características Principales:
 
 Grupos Personalizados: Crea grupos exclusivos, similar a las dinámicas de WhatsApp, para invitar a amigos, familiares y conocidos a participar en intercambios de recomendaciones 
 de películas.
+
 Notificaciones Integradas: Mantente actualizado con las últimas sugerencias y comentarios a través de notificaciones instantáneas, permitiéndote estar siempre conectado con tus grupos 
 y descubrir nuevas películas.
+
 Gestión de Grupos: Solicita ser administrador de un grupo para tener un mayor control sobre las recomendaciones y la participación de los miembros. 
 Invita a nuevos usuarios y disfruta de una experiencia personalizada.
+
 Interacción Social: Dale "me gusta" y comenta las recomendaciones de otros usuarios, fomentando la interacción y la construcción de una comunidad cinematográfica activa.
+
 Invitaciones Personalizadas: Invita a tus amigos a unirse a la aplicación, ampliando así tu red de contactos y enriqueciendo las opciones de películas disponibles para ti y tu grupo.
 
 Objetivo:
@@ -27,11 +31,16 @@ Main Features:
 
 Custom Groups: Create exclusive groups, similar to WhatsApp dynamics, to invite friends, family and acquaintances to participate in exchanges of recommendations
 of movies.
+
 Integrated Notifications: Stay up to date with the latest suggestions and comments through instant notifications, allowing you to always stay connected with your groups
 and discover new movies.
+
 Group Management: Apply to be a group administrator to have greater control over recommendations and member participation.
+
 Invite new users and enjoy a personalized experience.
+
 Social Interaction: Like and comment on other users' recommendations, encouraging interaction and building an active film community.
+
 Personalized Invitations: Invite your friends to join the application, thus expanding your network of contacts and enriching the movie options available to you and your group.
 
 Aim:
